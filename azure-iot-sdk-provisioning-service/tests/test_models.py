@@ -2,13 +2,8 @@
 # Licensed under the MIT license. See LICENSE file in the project root for
 # full license information.
 
-#Temporary path hack (replace once monorepo path solution implemented)
-import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-#---------------------------------------------------------------------
-
 import pytest
-from provisioningserviceclient.models import AttestationMechanism
+from azure.iot.sdk.provisioning.service.models import AttestationMechanism
 
 @pytest.fixture(scope="module")
 def dummy_value_1():

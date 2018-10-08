@@ -6,9 +6,9 @@
 """
 
 from msrest.authentication import Authentication
-from connection_string import ConnectionString
-from connection_string import HOST_NAME, SHARED_ACCESS_KEY_NAME, SHARED_ACCESS_KEY
-from sastoken import SasToken
+from azure.iot.sdk.common.connection_string import ConnectionString
+from azure.iot.sdk.common.connection_string import HOST_NAME, SHARED_ACCESS_KEY_NAME, SHARED_ACCESS_KEY
+from azure.iot.sdk.common.sastoken import SasToken
 
 __all__ = [
     "ConnectionStringAuthentication"

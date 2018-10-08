@@ -2,17 +2,12 @@
 # Licensed under the MIT license. See LICENSE file in the project root for
 # full license information.
 
-#Temporary path hack (replace once monorepo path solution implemented)
-import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-#---------------------------------------------------------------------
-
 import pytest
 from pytest_mock import mocker
-from provisioningserviceclient import ProvisioningServiceClient
-from provisioningserviceclient.protocol import ProvisioningServiceClient as BaseProvisioningServiceClient
-from provisioningserviceclient.auth import ConnectionStringAuthentication
-from provisioningserviceclient.models import IndividualEnrollment, EnrollmentGroup, AttestationMechanism
+from azure.iot.sdk.provisioning.service import ProvisioningServiceClient
+from azure.iot.sdk.provisioning.service.protocol import ProvisioningServiceClient as BaseProvisioningServiceClient
+from azure.iot.sdk.provisioning.service.auth import ConnectionStringAuthentication
+from azure.iot.sdk.provisioning.service.models import IndividualEnrollment, EnrollmentGroup, AttestationMechanism
 
 @pytest.fixture(scope="module")
 def service_str():
@@ -45,7 +40,7 @@ def test_create(mocker, service_str):
     """
     mock_parent_init = mocker.patch.object(BaseProvisioningServiceClient, '__init__', autospec=True)
     auth = ConnectionStringAuthentication(service_str)
-    mock_auth = mocker.patch('provisioningserviceclient.client.ConnectionStringAuthentication', return_value=auth, autospec=True)
+    mock_auth = mocker.patch('azure.iot.sdk.provisioning.service.client.ConnectionStringAuthentication', return_value=auth, autospec=True)
     client = ProvisioningServiceClient(service_str)
     mock_auth.assert_called_once_with(service_str)
     mock_parent_init.assert_called_once_with(client, mock_auth.return_value, "http://my.host.name")

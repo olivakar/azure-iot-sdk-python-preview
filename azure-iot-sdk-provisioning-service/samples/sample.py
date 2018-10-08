@@ -2,9 +2,8 @@
 # Licensed under the MIT license. See LICENSE file in the project root for
 # full license information.
 
-from provisioningserviceclient import ProvisioningServiceClient
-from provisioningserviceclient.models import (BulkEnrollmentOperation, IndividualEnrollment, AttestationMechanism, TpmAttestation, QuerySpecification)
-from provisioningserviceclient.auth import ConnectionStringAuthentication
+from azure.iot.sdk.provisioning.service import ProvisioningServiceClient
+from azure.iot.sdk.provisioning.service.models import (BulkEnrollmentOperation, IndividualEnrollment, AttestationMechanism, TpmAttestation, QuerySpecification)
 
 service_string = "[Service Connection String]"
 ek = "[Endorsement Key]"

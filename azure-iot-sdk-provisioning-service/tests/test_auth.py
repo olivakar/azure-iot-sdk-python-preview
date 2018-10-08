@@ -2,15 +2,9 @@
 # Licensed under the MIT license. See LICENSE file in the project root for
 # full license information.
 
-#Temporary path hack (replace once monorepo path solution implemented)
-import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-#---------------------------------------------------------------------
-
 import pytest
 from pytest_mock import mocker
-from provisioningserviceclient.auth import ConnectionStringAuthentication, HOST_NAME, SHARED_ACCESS_KEY, SHARED_ACCESS_KEY_NAME
-from provisioningserviceclient.sastoken import SasToken
+from azure.iot.sdk.provisioning.service.auth import ConnectionStringAuthentication, HOST_NAME, SHARED_ACCESS_KEY, SHARED_ACCESS_KEY_NAME
 
 @pytest.fixture(scope="module")
 def hostname():
@@ -50,11 +44,11 @@ def test__getitem__(valid_cs_auth, hostname, keyname, key):
 def test_signed_session(mocker, valid_cs_auth, hostname, keyname, key):
     """Test that a SasToken is created and added to the Authorization header
     """
-    mock_sas = mocker.patch("provisioningserviceclient.auth.SasToken", autospec=True)
+    mock_sas = mocker.patch("azure.iot.sdk.provisioning.service.auth.SasToken", autospec=True)
     dummy_token = "DUMMY_SASTOKEN"
     mock_sas.return_value.__str__.return_value = dummy_token #use __str__ instead of __repr__ because __repr__ is NonCallableMock
 
     session = valid_cs_auth.signed_session()
 
-    mock_sas.assert_called_once_with(hostname, keyname, key)
+    mock_sas.assert_called_once_with(hostname, key, keyname)
     assert session.headers["Authorization"] == dummy_token

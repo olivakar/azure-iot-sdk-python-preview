@@ -20,5 +20,5 @@ input-file: service.json
 
 python:
     namespace: protocol
-    output-folder: ./
+    output-folder: azure/iot/sdk/provisioning/service
 ```

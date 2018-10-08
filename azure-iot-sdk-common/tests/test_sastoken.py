@@ -2,7 +2,7 @@
 
 import pytest
 import time
-from sastoken import SasToken, SasTokenError
+from azure.iot.sdk.common.sastoken import SasToken, SasTokenError
 
 
 class TestCreateSasToken(object):
