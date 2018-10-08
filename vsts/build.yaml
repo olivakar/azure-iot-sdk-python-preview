@@ -36,6 +36,6 @@ steps:
 - task: PublishTestResults@2
   displayName: 'Publish Test Results **/*-test-results.xml'
   inputs:
-    testResultsFiles: '**/test-results.xml'
+    testResultsFiles: '**/*-test-results.xml'
 
     testRunTitle: 'Python $(python.version)'
