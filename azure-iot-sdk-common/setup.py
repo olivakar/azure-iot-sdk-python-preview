@@ -21,7 +21,7 @@ setup(
     ],
     install_requires=[
         'six'
-    ]
+    ],
     packages=find_packages(exclude=[
         'tests'
     ])
