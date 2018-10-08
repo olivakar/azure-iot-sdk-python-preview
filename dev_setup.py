@@ -20,7 +20,7 @@ def pip_command(command, error_ok=False):
         print()
 
     except CalledProcessError as err:
-        print(err, file=sys.stderr)
+        print(err)
         if not error_ok:
             sys.exit(1)
 
