@@ -34,7 +34,7 @@ steps:
   displayName: pytest
 
 - task: PublishTestResults@2
-  displayName: 'Publish Test Results **/test-results.xml'
+  displayName: 'Publish Test Results **/*-test-results.xml'
   inputs:
     testResultsFiles: '**/test-results.xml'
 
