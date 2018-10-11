@@ -3,7 +3,7 @@
 # full license information.
 
 import pytest
-from azure.iot.sdk.provisioning.service.models import AttestationMechanism
+from azure.iot.provisioning.servicesdk.models import AttestationMechanism
 
 @pytest.fixture(scope="module")
 def dummy_value_1():

@@ -4,10 +4,10 @@
 
 import pytest
 from pytest_mock import mocker
-from azure.iot.sdk.provisioning.service import ProvisioningServiceClient
-from azure.iot.sdk.provisioning.service.protocol import ProvisioningServiceClient as BaseProvisioningServiceClient
-from azure.iot.sdk.provisioning.service.auth import ConnectionStringAuthentication
-from azure.iot.sdk.provisioning.service.models import IndividualEnrollment, EnrollmentGroup, AttestationMechanism
+from azure.iot.provisioning.servicesdk import ProvisioningServiceClient
+from azure.iot.provisioning.servicesdk.protocol import ProvisioningServiceClient as BaseProvisioningServiceClient
+from azure.iot.provisioning.servicesdk.auth import ConnectionStringAuthentication
+from azure.iot.provisioning.servicesdk.models import IndividualEnrollment, EnrollmentGroup, AttestationMechanism
 
 @pytest.fixture(scope="module")
 def service_str():
@@ -40,7 +40,7 @@ def test_create(mocker, service_str):
     """
     mock_parent_init = mocker.patch.object(BaseProvisioningServiceClient, '__init__', autospec=True)
     auth = ConnectionStringAuthentication(service_str)
-    mock_auth = mocker.patch('azure.iot.sdk.provisioning.service.client.ConnectionStringAuthentication', return_value=auth, autospec=True)
+    mock_auth = mocker.patch('azure.iot.provisioning.servicesdk.client.ConnectionStringAuthentication', return_value=auth, autospec=True)
     client = ProvisioningServiceClient(service_str)
     mock_auth.assert_called_once_with(service_str)
     mock_parent_init.assert_called_once_with(client, mock_auth.return_value, "http://my.host.name")

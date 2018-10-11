@@ -4,15 +4,14 @@ with open("doc/package-readme.md", "r") as fh:
     _long_description = fh.read()
 
 setup(
-    name='azure-iot-sdk-provisioning-service',
+    name='azure-iot-provisioning-servicesdk',
     version='1.1.0',
     description='Microsoft Azure IoT Provisioning Service SDK',
     license='MIT License',
     url='https://github.com/Azure/azure-iot-sdk-python',
-    author='aziotclb',
-    author_email='aziotclb@microsoft.com',
-    #long_description=_long_description,
-    #long_description_content_type='text/markdown',
+    author='Microsoft Corporation',
+    long_description=_long_description,
+    long_description_content_type='text/markdown',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
@@ -23,10 +22,12 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6'],
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        ],
     install_requires=[
         'msrest',
-        'azure-iot-sdk-common'
+        'azure-iot-common'
         ],
     packages=find_packages(exclude=[
         'tests'

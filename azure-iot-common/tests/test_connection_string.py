@@ -1,5 +1,5 @@
 import pytest
-from azure.iot.sdk.common.connection_string import ConnectionString
+from azure.iot.common.connection_string import ConnectionString
 
 class TestConnectionStringInput(object):
     def test_empty_input(self):

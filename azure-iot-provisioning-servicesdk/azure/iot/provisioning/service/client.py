@@ -20,7 +20,8 @@ class ProvisioningServiceClient(_ProvisioningServiceClient):
 
     def __init__(self, connection_string):
         cs_auth = ConnectionStringAuthentication(connection_string)
-        super(ProvisioningServiceClient, self).__init__(cs_auth, "http://" + cs_auth[HOST_NAME])
+        super(ProvisioningServiceClient, self).__init__(cs_auth, "https://" + cs_auth[HOST_NAME])
+
 
     def create_or_update_individual_enrollment(self, id, enrollment, custom_headers=None, raw=False, **operation_config):
         """Create or update a device enrollment record.
@@ -41,7 +42,9 @@ class ProvisioningServiceClient(_ProvisioningServiceClient):
         :raises:
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
-        super(ProvisioningServiceClient, self).create_or_update_individual_enrollment(id, enrollment, enrollment.etag, custom_headers, raw, **operation_config)
+        return super(ProvisioningServiceClient, self).create_or_update_individual_enrollment(id, enrollment, enrollment.etag, custom_headers, raw, **operation_config)
+    create_or_update_individual_enrollment.metadata = _ProvisioningServiceClient.create_or_update_individual_enrollment.metadata
+
 
     def create_or_update_enrollment_group(self, id, enrollment_group, custom_headers=None, raw=False, **operation_config):
         """Create or update a device enrollment group.
@@ -63,4 +66,5 @@ class ProvisioningServiceClient(_ProvisioningServiceClient):
         :raises:
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
-        super(ProvisioningServiceClient, self).create_or_update_enrollment_group(id, enrollment_group, enrollment_group.etag, custom_headers, raw, **operation_config)
+        return super(ProvisioningServiceClient, self).create_or_update_enrollment_group(id, enrollment_group, enrollment_group.etag, custom_headers, raw, **operation_config)
+    create_or_update_enrollment_group.metadata = _ProvisioningServiceClient.create_or_update_enrollment_group.metadata

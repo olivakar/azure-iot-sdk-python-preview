@@ -11,7 +11,7 @@ import os
 import sys
 from subprocess import check_call, CalledProcessError
 
-COMMON_PKG_NAME = 'azure-iot-sdk-common'
+COMMON_PKG_NAME = 'azure-iot-common'
 
 def pip_command(command, error_ok=False):
     try:

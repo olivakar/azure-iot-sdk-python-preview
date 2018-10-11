@@ -2,12 +2,13 @@
 
 ## How to Install
 ```
-pip install azure-iothub-provisioningserviceclient
+pip install azure-iot-provisioning-servicesdk
 ```
 
 ## Feature List
 Use this SDK to:
-* Manage Azure IoT Hub Device Provisioning Service enrollments (CRUD operations)
+* Manage Individual Enrollments and Enrollment Groups on the Azure IoT Hub Device Provisioning Service with CRUD operations
+* Query Individual Enrollments, Enrollment Groups and Device Registration States [COMING SOON]
 
 ## User Guides
 * Read the [Azure IoT Fundamentals][iot-fundamentals] guide to get an overview of what Azure IoT can do.

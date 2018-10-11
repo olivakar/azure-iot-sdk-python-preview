@@ -39,3 +39,10 @@ steps:
     testResultsFiles: '**/*-test-results.xml'
 
     testRunTitle: 'Python $(python.version)'
+
+- task: PyPIPublisher@0
+  displayName: 'Publish Provisioning Service SDK'
+  inputs:
+    pypiConnection: 'Azure IoT SDK PyPI'
+    packageDirectory: '/azure-iot-provisioning-servicesdk'
+    alsoPublishWheel: true

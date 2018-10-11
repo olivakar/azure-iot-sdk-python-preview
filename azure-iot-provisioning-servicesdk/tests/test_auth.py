@@ -4,7 +4,7 @@
 
 import pytest
 from pytest_mock import mocker
-from azure.iot.sdk.provisioning.service.auth import ConnectionStringAuthentication, HOST_NAME, SHARED_ACCESS_KEY, SHARED_ACCESS_KEY_NAME
+from azure.iot.provisioning.servicesdk.auth import ConnectionStringAuthentication, HOST_NAME, SHARED_ACCESS_KEY, SHARED_ACCESS_KEY_NAME
 
 @pytest.fixture(scope="module")
 def hostname():
@@ -44,7 +44,7 @@ def test__getitem__(valid_cs_auth, hostname, keyname, key):
 def test_signed_session(mocker, valid_cs_auth, hostname, keyname, key):
     """Test that a SasToken is created and added to the Authorization header
     """
-    mock_sas = mocker.patch("azure.iot.sdk.provisioning.service.auth.SasToken", autospec=True)
+    mock_sas = mocker.patch("azure.iot.provisioning.servicesdk.auth.SasToken", autospec=True)
     dummy_token = "DUMMY_SASTOKEN"
     mock_sas.return_value.__str__.return_value = dummy_token #use __str__ instead of __repr__ because __repr__ is NonCallableMock
 
