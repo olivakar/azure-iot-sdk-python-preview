@@ -1,4 +1,9 @@
-from ..device.symmetric_key_authentication_provider import SymmetricKeyAuthenticationProvider
+# --------------------------------------------------------------------------------------------
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License. See License.txt in the project root for license information.
+# --------------------------------------------------------------------------------------------
+
+from azure.iot.hub.devicesdk.symmetric_key_authentication_provider import SymmetricKeyAuthenticationProvider
 import pytest
 
 
@@ -78,7 +83,7 @@ def test_create_from_module_gateway_connection_string():
 def test_sastoken_key(mocker):
     uri = hostname + "/devices/" + device_id
     mock_sastoken = mocker.patch(
-        "iothub_device_sdk.device.symmetric_key_authentication_provider.SasToken"
+        "azure.iot.hub.devicesdk.symmetric_key_authentication_provider.SasToken"
     )
     dummy_value = "SharedAccessSignature sr=beauxbatons.academy-net%2Fdevices%2FMyPensieve&sig=zh8pwNIG56yUd3Nna7lyKA2HQAns84U3XwxyFQJqh48%3D&se=1539036534"
     mock_sastoken.return_value.__str__.return_value = dummy_value
@@ -96,7 +101,7 @@ def test_sastoken_key(mocker):
 def test_sastoken_keyname(mocker):
     uri = hostname + "/devices/" + device_id
     mock_sastoken = mocker.patch(
-        "iothub_device_sdk.device.symmetric_key_authentication_provider.SasToken"
+        "azure.iot.hub.devicesdk.symmetric_key_authentication_provider.SasToken"
     )
     dummy_value = "SharedAccessSignature sr=beauxbatons.academy-net%2Fdevices%2FMyPensieve&sig=fT/nO0NA/25IKl0Ei2upxDDj6KnY6RPVIjlV84/9aR8%3D&se=1539043658&skn=alohomora"
     mock_sastoken.return_value.__str__.return_value = dummy_value

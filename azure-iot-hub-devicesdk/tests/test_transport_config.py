@@ -1,6 +1,11 @@
-from ..device.symmetric_key_authentication_provider import SymmetricKeyAuthenticationProvider
-from iothub_device_sdk.device.transport.mqtt.mqtt_transport import MQTTTransport
-from iothub_device_sdk.device.transport.transport_config import TransportConfig, TransportProtocol
+# --------------------------------------------------------------------------------------------
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License. See License.txt in the project root for license information.
+# --------------------------------------------------------------------------------------------
+
+from azure.iot.hub.devicesdk.symmetric_key_authentication_provider import SymmetricKeyAuthenticationProvider
+from azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport import MQTTTransport
+from azure.iot.hub.devicesdk.transport.transport_config import TransportConfig, TransportProtocol
 import pytest
 
 connection_string_format = "HostName={};DeviceId={};SharedAccessKey={}"
@@ -31,7 +36,7 @@ def test_create():
 
 def test_create_specific_transport(mocker, authentication_provider):
     mock_transport = mocker.patch(
-        "iothub_device_sdk.device.transport.transport_config.MQTTTransport"
+        "azure.iot.hub.devicesdk.transport.transport_config.MQTTTransport"
     )
 
     transport_config = TransportConfig(TransportProtocol.MQTT)

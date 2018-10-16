@@ -5,7 +5,7 @@
 
 from .mqtt_provider import MQTTProvider
 import types
-from iothub_device_sdk.device.transport.abstract_transport import AbstractTransport
+from azure.iot.hub.devicesdk.transport.abstract_transport import AbstractTransport
 
 
 class MQTTTransport(AbstractTransport):

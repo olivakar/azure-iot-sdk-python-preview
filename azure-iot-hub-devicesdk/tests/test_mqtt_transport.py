@@ -1,7 +1,12 @@
+# --------------------------------------------------------------------------------------------
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License. See License.txt in the project root for license information.
+# --------------------------------------------------------------------------------------------
+
 import pytest
-from iothub_device_sdk.device.transport.mqtt.mqtt_transport import MQTTTransport
-from iothub_device_sdk.device.transport.mqtt.mqtt_provider import MQTTProvider
-from ..device.symmetric_key_authentication_provider import SymmetricKeyAuthenticationProvider
+from azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport import MQTTTransport
+from azure.iot.hub.devicesdk.transport.mqtt.mqtt_provider import MQTTProvider
+from azure.iot.hub.devicesdk.symmetric_key_authentication_provider import SymmetricKeyAuthenticationProvider
 from six import add_move, MovedModule
 
 add_move(MovedModule("mock", "mock", "unittest.mock"))
@@ -43,7 +48,7 @@ def test_create():
 def test_connect_to_message_broker(mocker, transport):
     mock_mqtt_provider = MagicMock(spec=MQTTProvider)
     mock_mqtt_provider_constructor = mocker.patch(
-        "iothub_device_sdk.device.transport.mqtt.mqtt_transport.MQTTProvider"
+        "azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport.MQTTProvider"
     )
     mock_mqtt_provider_constructor.return_value = mock_mqtt_provider
 
@@ -59,7 +64,7 @@ def test_sendevent(mocker, transport):
 
     mock_mqtt_provider = MagicMock(spec=MQTTProvider)
     mock_mqtt_provider_constructor = mocker.patch(
-        "iothub_device_sdk.device.transport.mqtt.mqtt_transport.MQTTProvider"
+        "azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport.MQTTProvider"
     )
     mock_mqtt_provider_constructor.return_value = mock_mqtt_provider
     mocker.patch.object(mock_mqtt_provider, "connect")
@@ -75,7 +80,7 @@ def test_sendevent(mocker, transport):
 def test_disconnect_from_message_broker(mocker, transport):
     mock_mqtt_provider = MagicMock(spec=MQTTProvider)
     mock_mqtt_provider_constructor = mocker.patch(
-        "iothub_device_sdk.device.transport.mqtt.mqtt_transport.MQTTProvider"
+        "azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport.MQTTProvider"
     )
     mock_mqtt_provider_constructor.return_value = mock_mqtt_provider
     mocker.patch.object(mock_mqtt_provider, "disconnect")

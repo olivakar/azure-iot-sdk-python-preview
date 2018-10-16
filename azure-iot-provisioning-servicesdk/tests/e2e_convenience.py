@@ -1,3 +1,8 @@
+# --------------------------------------------------------------------------------------------
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License. See License.txt in the project root for license information.
+# --------------------------------------------------------------------------------------------
+
 from azure.iot.provisioning.servicesdk.models import TpmAttestation, X509CertificateWithInfo, \
     X509Attestation, X509CAReferences, AttestationMechanism, X509Certificates
 

@@ -4,8 +4,8 @@
 # --------------------------------------------------------------------------------------------
 import os
 import logging
-from iothub_device_sdk.device.device_client import DeviceClient
-from iothub_device_sdk.device.transport.transport_config import TransportProtocol, TransportConfig
+from azure.iot.hub.devicesdk.device_client import DeviceClient
+from azure.iot.hub.devicesdk.transport.transport_config import TransportProtocol, TransportConfig
 
 logging.basicConfig(level=logging.INFO)
 

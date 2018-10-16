@@ -1,4 +1,9 @@
-from ..device.transport.mqtt.mqtt_provider import MQTTProvider
+# --------------------------------------------------------------------------------------------
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License. See License.txt in the project root for license information.
+# --------------------------------------------------------------------------------------------
+
+from azure.iot.hub.devicesdk.transport.mqtt.mqtt_provider import MQTTProvider
 import paho.mqtt.client as mqtt
 from transitions import Machine
 import os
@@ -43,7 +48,7 @@ def test_create():
 def test_on_enter_connecting(mocker):
     mock_mqtt_client = MagicMock(spec=mqtt.Client)
     mock_constructor_mqtt_client = mocker.patch(
-        "iothub_device_sdk.device.transport.mqtt.mqtt_provider.mqtt.Client"
+        "azure.iot.hub.devicesdk.transport.mqtt.mqtt_provider.mqtt.Client"
     )
     mock_constructor_mqtt_client.return_value = mock_mqtt_client
 
@@ -88,7 +93,7 @@ def test_on_enter_disconnecting(mocker):
 def test_connect(mocker):
     mock_machine_from_real = create_from_real_state_machine()
     mock_machine_constructor = mocker.patch(
-        "iothub_device_sdk.device.transport.mqtt.mqtt_provider.Machine"
+        "azure.iot.hub.devicesdk.transport.mqtt.mqtt_provider.Machine"
     )
     mock_machine_constructor.return_value = mock_machine_from_real
 
@@ -101,7 +106,7 @@ def test_connect(mocker):
 def test_disconnect(mocker):
     mock_mqtt_client = MagicMock(spec=mqtt.Client)
     mock_constructor_mqtt_client = mocker.patch(
-        "iothub_device_sdk.device.transport.mqtt.mqtt_provider.mqtt.Client"
+        "azure.iot.hub.devicesdk.transport.mqtt.mqtt_provider.mqtt.Client"
     )
     mock_constructor_mqtt_client.return_value = mock_mqtt_client
     mocker.patch.object(mock_mqtt_client, "loop_stop")
@@ -119,7 +124,7 @@ def test_publish(mocker):
 
     mock_mqtt_client = MagicMock(spec=mqtt.Client)
     mock_constructor_mqtt_client = mocker.patch(
-        "iothub_device_sdk.device.transport.mqtt.mqtt_provider.mqtt.Client"
+        "azure.iot.hub.devicesdk.transport.mqtt.mqtt_provider.mqtt.Client"
     )
     mock_constructor_mqtt_client.return_value = mock_mqtt_client
     mocker.patch.object(mock_mqtt_client, "publish")
@@ -136,7 +141,7 @@ def test_emit_connection_status(mocker):
 
     mock_machine_from_real = create_from_real_state_machine()
     mock_machine_constructor = mocker.patch(
-        "iothub_device_sdk.device.transport.mqtt.mqtt_provider.Machine"
+        "azure.iot.hub.devicesdk.transport.mqtt.mqtt_provider.Machine"
     )
     mock_machine_constructor.return_value = mock_machine_from_real
     connected_state = "connected"

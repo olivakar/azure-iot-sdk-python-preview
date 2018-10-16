@@ -6,14 +6,7 @@
 import os
 import sys
 
-# Temporary path hack (replace once monorepo path solution implemented)
-if sys.platform == "darwin" or sys.platform == "linux" or sys.platform == "linux2":
-    sys.path.append(os.path.join(os.path.dirname(__file__), "../../python_shared_utils"))
-else:
-    sys.path.append(os.path.join(os.path.dirname(__file__), "..\..\python_shared_utils"))
-# ---------------------------------------------------------------------
-
-from connection_string import (
+from azure.iot.common.connection_string import (
     ConnectionString,
     HOST_NAME,
     SHARED_ACCESS_KEY_NAME,
@@ -23,7 +16,7 @@ from connection_string import (
     MODULE_ID,
     GATEWAY_HOST_NAME,
 )
-from sastoken import SasToken
+from azure.iot.common.sastoken import SasToken
 
 
 class SymmetricKeyAuthenticationProvider(object):
