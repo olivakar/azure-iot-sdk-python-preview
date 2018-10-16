@@ -29,16 +29,18 @@ class ReprovisionPolicy(Model):
     """
 
     _validation = {
-        'update_hub_assignment': {'required': True},
-        'migrate_device_data': {'required': True},
+        "update_hub_assignment": {"required": True},
+        "migrate_device_data": {"required": True},
     }
 
     _attribute_map = {
-        'update_hub_assignment': {'key': 'updateHubAssignment', 'type': 'bool'},
-        'migrate_device_data': {'key': 'migrateDeviceData', 'type': 'bool'},
+        "update_hub_assignment": {"key": "updateHubAssignment", "type": "bool"},
+        "migrate_device_data": {"key": "migrateDeviceData", "type": "bool"},
     }
 
-    def __init__(self, *, update_hub_assignment: bool=True, migrate_device_data: bool=True, **kwargs) -> None:
+    def __init__(
+        self, *, update_hub_assignment: bool = True, migrate_device_data: bool = True, **kwargs
+    ) -> None:
         super(ReprovisionPolicy, self).__init__(**kwargs)
         self.update_hub_assignment = update_hub_assignment
         self.migrate_device_data = migrate_device_data

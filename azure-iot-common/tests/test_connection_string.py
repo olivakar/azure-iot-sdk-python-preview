@@ -6,6 +6,7 @@
 import pytest
 from azure.iot.common.connection_string import ConnectionString
 
+
 class TestConnectionStringInput(object):
     def test_empty_input(self):
         with pytest.raises(ValueError):
@@ -76,3 +77,24 @@ def test___getitem__item_does_not_exist():
             "HostName=my.host.name;SharedAccessKeyName=mykeyname;SharedAccessKey=Zm9vYmFy"
         )
         cs["SharedAccessSignature"]
+
+
+def test_get_item_exists():
+    cs = ConnectionString(
+        "HostName=my.host.name;SharedAccessKeyName=mykeyname;SharedAccessKey=Zm9vYmFy"
+    )
+    assert cs.get("HostName") == "my.host.name"
+
+
+def test_get_item_does_not_exist_w_default():
+    cs = ConnectionString(
+        "HostName=my.host.name;SharedAccessKeyName=mykeyname;SharedAccessKey=Zm9vYmFy"
+    )
+    assert cs.get("invalidkey", "defaultval") == "defaultval"
+
+
+def test_get_item_does_not_exist_no_given_default():
+    cs = ConnectionString(
+        "HostName=my.host.name;SharedAccessKeyName=mykeyname;SharedAccessKey=Zm9vYmFy"
+    )
+    assert cs.get("invalidkey") == None

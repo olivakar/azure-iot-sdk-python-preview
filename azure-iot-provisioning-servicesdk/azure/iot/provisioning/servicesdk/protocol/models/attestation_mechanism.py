@@ -24,20 +24,18 @@ class AttestationMechanism(Model):
     :type symmetric_key: ~protocol.models.SymmetricKeyAttestation
     """
 
-    _validation = {
-        'type': {'required': True},
-    }
+    _validation = {"type": {"required": True}}
 
     _attribute_map = {
-        'type': {'key': 'type', 'type': 'str'},
-        'tpm': {'key': 'tpm', 'type': 'TpmAttestation'},
-        'x509': {'key': 'x509', 'type': 'X509Attestation'},
-        'symmetric_key': {'key': 'symmetricKey', 'type': 'SymmetricKeyAttestation'},
+        "type": {"key": "type", "type": "str"},
+        "tpm": {"key": "tpm", "type": "TpmAttestation"},
+        "x509": {"key": "x509", "type": "X509Attestation"},
+        "symmetric_key": {"key": "symmetricKey", "type": "SymmetricKeyAttestation"},
     }
 
     def __init__(self, **kwargs):
         super(AttestationMechanism, self).__init__(**kwargs)
-        self.type = kwargs.get('type', None)
-        self.tpm = kwargs.get('tpm', None)
-        self.x509 = kwargs.get('x509', None)
-        self.symmetric_key = kwargs.get('symmetric_key', None)
+        self.type = kwargs.get("type", None)
+        self.tpm = kwargs.get("tpm", None)
+        self.x509 = kwargs.get("x509", None)
+        self.symmetric_key = kwargs.get("symmetric_key", None)

@@ -36,7 +36,7 @@ class SasToken(object):
     SasTokenError if trying to build a SasToken from invalid values
     """
 
-    _encoding_type = 'utf-8'
+    _encoding_type = "utf-8"
     _service_token_format = "SharedAccessSignature sr={}&sig={}&se={}&skn={}"
     _device_token_format = "SharedAccessSignature sr={}&sig={}&se={}"
 
@@ -75,7 +75,5 @@ class SasToken(object):
                 self._uri, signature, str(self.expiry_time), self._key_name
             )
         else:
-            token = self._device_token_format.format(
-                self._uri, signature, str(self.expiry_time)
-            )
+            token = self._device_token_format.format(self._uri, signature, str(self.expiry_time))
         return token

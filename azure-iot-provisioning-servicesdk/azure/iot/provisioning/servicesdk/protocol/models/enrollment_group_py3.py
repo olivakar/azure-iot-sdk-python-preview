@@ -62,28 +62,45 @@ class EnrollmentGroup(Model):
     """
 
     _validation = {
-        'enrollment_group_id': {'required': True},
-        'attestation': {'required': True},
-        'created_date_time_utc': {'readonly': True},
-        'last_updated_date_time_utc': {'readonly': True},
+        "enrollment_group_id": {"required": True},
+        "attestation": {"required": True},
+        "created_date_time_utc": {"readonly": True},
+        "last_updated_date_time_utc": {"readonly": True},
     }
 
     _attribute_map = {
-        'enrollment_group_id': {'key': 'enrollmentGroupId', 'type': 'str'},
-        'attestation': {'key': 'attestation', 'type': 'AttestationMechanism'},
-        'iot_hub_host_name': {'key': 'iotHubHostName', 'type': 'str'},
-        'initial_twin': {'key': 'initialTwin', 'type': 'InitialTwin'},
-        'etag': {'key': 'etag', 'type': 'str'},
-        'provisioning_status': {'key': 'provisioningStatus', 'type': 'str'},
-        'reprovision_policy': {'key': 'reprovisionPolicy', 'type': 'ReprovisionPolicy'},
-        'created_date_time_utc': {'key': 'createdDateTimeUtc', 'type': 'iso-8601'},
-        'last_updated_date_time_utc': {'key': 'lastUpdatedDateTimeUtc', 'type': 'iso-8601'},
-        'allocation_policy': {'key': 'allocationPolicy', 'type': 'str'},
-        'iot_hubs': {'key': 'iotHubs', 'type': '[str]'},
-        'custom_allocation_definition': {'key': 'customAllocationDefinition', 'type': 'CustomAllocationDefinition'},
+        "enrollment_group_id": {"key": "enrollmentGroupId", "type": "str"},
+        "attestation": {"key": "attestation", "type": "AttestationMechanism"},
+        "iot_hub_host_name": {"key": "iotHubHostName", "type": "str"},
+        "initial_twin": {"key": "initialTwin", "type": "InitialTwin"},
+        "etag": {"key": "etag", "type": "str"},
+        "provisioning_status": {"key": "provisioningStatus", "type": "str"},
+        "reprovision_policy": {"key": "reprovisionPolicy", "type": "ReprovisionPolicy"},
+        "created_date_time_utc": {"key": "createdDateTimeUtc", "type": "iso-8601"},
+        "last_updated_date_time_utc": {"key": "lastUpdatedDateTimeUtc", "type": "iso-8601"},
+        "allocation_policy": {"key": "allocationPolicy", "type": "str"},
+        "iot_hubs": {"key": "iotHubs", "type": "[str]"},
+        "custom_allocation_definition": {
+            "key": "customAllocationDefinition",
+            "type": "CustomAllocationDefinition",
+        },
     }
 
-    def __init__(self, *, enrollment_group_id: str, attestation, iot_hub_host_name: str=None, initial_twin=None, etag: str=None, provisioning_status="enabled", reprovision_policy=None, allocation_policy=None, iot_hubs=None, custom_allocation_definition=None, **kwargs) -> None:
+    def __init__(
+        self,
+        *,
+        enrollment_group_id: str,
+        attestation,
+        iot_hub_host_name: str = None,
+        initial_twin=None,
+        etag: str = None,
+        provisioning_status="enabled",
+        reprovision_policy=None,
+        allocation_policy=None,
+        iot_hubs=None,
+        custom_allocation_definition=None,
+        **kwargs
+    ) -> None:
         super(EnrollmentGroup, self).__init__(**kwargs)
         self.enrollment_group_id = enrollment_group_id
         self.attestation = attestation

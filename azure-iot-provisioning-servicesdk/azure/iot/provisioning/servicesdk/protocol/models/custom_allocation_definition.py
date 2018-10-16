@@ -22,17 +22,14 @@ class CustomAllocationDefinition(Model):
     :type api_version: str
     """
 
-    _validation = {
-        'webhook_url': {'required': True},
-        'api_version': {'required': True},
-    }
+    _validation = {"webhook_url": {"required": True}, "api_version": {"required": True}}
 
     _attribute_map = {
-        'webhook_url': {'key': 'webhookUrl', 'type': 'str'},
-        'api_version': {'key': 'apiVersion', 'type': 'str'},
+        "webhook_url": {"key": "webhookUrl", "type": "str"},
+        "api_version": {"key": "apiVersion", "type": "str"},
     }
 
     def __init__(self, **kwargs):
         super(CustomAllocationDefinition, self).__init__(**kwargs)
-        self.webhook_url = kwargs.get('webhook_url', None)
-        self.api_version = kwargs.get('api_version', None)
+        self.webhook_url = kwargs.get("webhook_url", None)
+        self.api_version = kwargs.get("api_version", None)

@@ -18,14 +18,10 @@ class DeviceCapabilities(Model):
     :type iot_edge: bool
     """
 
-    _validation = {
-        'iot_edge': {'required': True},
-    }
+    _validation = {"iot_edge": {"required": True}}
 
-    _attribute_map = {
-        'iot_edge': {'key': 'iotEdge', 'type': 'bool'},
-    }
+    _attribute_map = {"iot_edge": {"key": "iotEdge", "type": "bool"}}
 
     def __init__(self, **kwargs):
         super(DeviceCapabilities, self).__init__(**kwargs)
-        self.iot_edge = kwargs.get('iot_edge', False)
+        self.iot_edge = kwargs.get("iot_edge", False)

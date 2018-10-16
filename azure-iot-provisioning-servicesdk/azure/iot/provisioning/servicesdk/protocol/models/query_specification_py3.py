@@ -17,13 +17,9 @@ class QuerySpecification(Model):
     :type query: str
     """
 
-    _validation = {
-        'query': {'required': True},
-    }
+    _validation = {"query": {"required": True}}
 
-    _attribute_map = {
-        'query': {'key': 'query', 'type': 'str'},
-    }
+    _attribute_map = {"query": {"key": "query", "type": "str"}}
 
     def __init__(self, *, query: str, **kwargs) -> None:
         super(QuerySpecification, self).__init__(**kwargs)

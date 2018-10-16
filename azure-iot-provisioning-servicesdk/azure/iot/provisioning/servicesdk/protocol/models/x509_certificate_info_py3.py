@@ -32,28 +32,40 @@ class X509CertificateInfo(Model):
     """
 
     _validation = {
-        'subject_name': {'required': True},
-        'sha1_thumbprint': {'required': True},
-        'sha256_thumbprint': {'required': True},
-        'issuer_name': {'required': True},
-        'not_before_utc': {'required': True},
-        'not_after_utc': {'required': True},
-        'serial_number': {'required': True},
-        'version': {'required': True},
+        "subject_name": {"required": True},
+        "sha1_thumbprint": {"required": True},
+        "sha256_thumbprint": {"required": True},
+        "issuer_name": {"required": True},
+        "not_before_utc": {"required": True},
+        "not_after_utc": {"required": True},
+        "serial_number": {"required": True},
+        "version": {"required": True},
     }
 
     _attribute_map = {
-        'subject_name': {'key': 'subjectName', 'type': 'str'},
-        'sha1_thumbprint': {'key': 'sha1Thumbprint', 'type': 'str'},
-        'sha256_thumbprint': {'key': 'sha256Thumbprint', 'type': 'str'},
-        'issuer_name': {'key': 'issuerName', 'type': 'str'},
-        'not_before_utc': {'key': 'notBeforeUtc', 'type': 'iso-8601'},
-        'not_after_utc': {'key': 'notAfterUtc', 'type': 'iso-8601'},
-        'serial_number': {'key': 'serialNumber', 'type': 'str'},
-        'version': {'key': 'version', 'type': 'int'},
+        "subject_name": {"key": "subjectName", "type": "str"},
+        "sha1_thumbprint": {"key": "sha1Thumbprint", "type": "str"},
+        "sha256_thumbprint": {"key": "sha256Thumbprint", "type": "str"},
+        "issuer_name": {"key": "issuerName", "type": "str"},
+        "not_before_utc": {"key": "notBeforeUtc", "type": "iso-8601"},
+        "not_after_utc": {"key": "notAfterUtc", "type": "iso-8601"},
+        "serial_number": {"key": "serialNumber", "type": "str"},
+        "version": {"key": "version", "type": "int"},
     }
 
-    def __init__(self, *, subject_name: str, sha1_thumbprint: str, sha256_thumbprint: str, issuer_name: str, not_before_utc, not_after_utc, serial_number: str, version: int, **kwargs) -> None:
+    def __init__(
+        self,
+        *,
+        subject_name: str,
+        sha1_thumbprint: str,
+        sha256_thumbprint: str,
+        issuer_name: str,
+        not_before_utc,
+        not_after_utc,
+        serial_number: str,
+        version: int,
+        **kwargs
+    ) -> None:
         super(X509CertificateInfo, self).__init__(**kwargs)
         self.subject_name = subject_name
         self.sha1_thumbprint = sha1_thumbprint

@@ -20,12 +20,14 @@ class X509Attestation(Model):
     """
 
     _attribute_map = {
-        'client_certificates': {'key': 'clientCertificates', 'type': 'X509Certificates'},
-        'signing_certificates': {'key': 'signingCertificates', 'type': 'X509Certificates'},
-        'ca_references': {'key': 'caReferences', 'type': 'X509CAReferences'},
+        "client_certificates": {"key": "clientCertificates", "type": "X509Certificates"},
+        "signing_certificates": {"key": "signingCertificates", "type": "X509Certificates"},
+        "ca_references": {"key": "caReferences", "type": "X509CAReferences"},
     }
 
-    def __init__(self, *, client_certificates=None, signing_certificates=None, ca_references=None, **kwargs) -> None:
+    def __init__(
+        self, *, client_certificates=None, signing_certificates=None, ca_references=None, **kwargs
+    ) -> None:
         super(X509Attestation, self).__init__(**kwargs)
         self.client_certificates = client_certificates
         self.signing_certificates = signing_certificates

@@ -18,11 +18,11 @@ class X509CertificateWithInfo(Model):
     """
 
     _attribute_map = {
-        'certificate': {'key': 'certificate', 'type': 'str'},
-        'info': {'key': 'info', 'type': 'X509CertificateInfo'},
+        "certificate": {"key": "certificate", "type": "str"},
+        "info": {"key": "info", "type": "X509CertificateInfo"},
     }
 
     def __init__(self, **kwargs):
         super(X509CertificateWithInfo, self).__init__(**kwargs)
-        self.certificate = kwargs.get('certificate', None)
-        self.info = kwargs.get('info', None)
+        self.certificate = kwargs.get("certificate", None)
+        self.info = kwargs.get("info", None)

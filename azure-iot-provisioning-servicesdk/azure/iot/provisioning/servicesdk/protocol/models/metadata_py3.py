@@ -19,11 +19,11 @@ class Metadata(Model):
     """
 
     _attribute_map = {
-        'last_updated': {'key': 'lastUpdated', 'type': 'iso-8601'},
-        'last_updated_version': {'key': 'lastUpdatedVersion', 'type': 'long'},
+        "last_updated": {"key": "lastUpdated", "type": "iso-8601"},
+        "last_updated_version": {"key": "lastUpdatedVersion", "type": "long"},
     }
 
-    def __init__(self, *, last_updated=None, last_updated_version: int=None, **kwargs) -> None:
+    def __init__(self, *, last_updated=None, last_updated_version: int = None, **kwargs) -> None:
         super(Metadata, self).__init__(**kwargs)
         self.last_updated = last_updated
         self.last_updated_version = last_updated_version

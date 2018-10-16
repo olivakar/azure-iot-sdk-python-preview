@@ -4,12 +4,11 @@
 # --------------------------------------------------------------------------------------------
 
 from .client import ProvisioningServiceClient
-from .models import QuerySpecification, BulkEnrollmentOperation, ProvisioningServiceErrorDetailsException
+from .models import (
+    QuerySpecification,
+    BulkEnrollmentOperation,
+    ProvisioningServiceErrorDetailsException,
+)
 from . import models
 
-__all__ = [
-    "ProvisioningServiceClient",
-    "QuerySpecification",
-    "BulkEnrollmentOperation",
-    "models",
-]
+__all__ = ["ProvisioningServiceClient", "QuerySpecification", "BulkEnrollmentOperation", "models"]

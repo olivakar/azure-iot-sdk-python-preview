@@ -22,19 +22,19 @@ class BulkEnrollmentOperationError(Model):
     """
 
     _validation = {
-        'registration_id': {'required': True},
-        'error_code': {'required': True},
-        'error_status': {'required': True},
+        "registration_id": {"required": True},
+        "error_code": {"required": True},
+        "error_status": {"required": True},
     }
 
     _attribute_map = {
-        'registration_id': {'key': 'registrationId', 'type': 'str'},
-        'error_code': {'key': 'errorCode', 'type': 'int'},
-        'error_status': {'key': 'errorStatus', 'type': 'str'},
+        "registration_id": {"key": "registrationId", "type": "str"},
+        "error_code": {"key": "errorCode", "type": "int"},
+        "error_status": {"key": "errorStatus", "type": "str"},
     }
 
     def __init__(self, **kwargs):
         super(BulkEnrollmentOperationError, self).__init__(**kwargs)
-        self.registration_id = kwargs.get('registration_id', None)
-        self.error_code = kwargs.get('error_code', None)
-        self.error_status = kwargs.get('error_status', None)
+        self.registration_id = kwargs.get("registration_id", None)
+        self.error_code = kwargs.get("error_code", None)
+        self.error_status = kwargs.get("error_status", None)

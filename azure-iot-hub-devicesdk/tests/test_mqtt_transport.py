@@ -6,7 +6,9 @@
 import pytest
 from azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport import MQTTTransport
 from azure.iot.hub.devicesdk.transport.mqtt.mqtt_provider import MQTTProvider
-from azure.iot.hub.devicesdk.symmetric_key_authentication_provider import SymmetricKeyAuthenticationProvider
+from azure.iot.hub.devicesdk.symmetric_key_authentication_provider import (
+    SymmetricKeyAuthenticationProvider,
+)
 from six import add_move, MovedModule
 
 add_move(MovedModule("mock", "mock", "unittest.mock"))

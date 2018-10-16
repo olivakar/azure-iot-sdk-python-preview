@@ -78,3 +78,9 @@ class ConnectionString(object):
 
     def __repr__(self):
         return self._strrep
+
+    def get(self, key, default=None):
+        try:
+            return self._dict[key]
+        except KeyError:
+            return default

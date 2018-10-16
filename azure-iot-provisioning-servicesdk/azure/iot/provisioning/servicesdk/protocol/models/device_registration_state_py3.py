@@ -48,29 +48,29 @@ class DeviceRegistrationState(Model):
     """
 
     _validation = {
-        'registration_id': {'readonly': True},
-        'created_date_time_utc': {'readonly': True},
-        'assigned_hub': {'readonly': True},
-        'device_id': {'readonly': True},
-        'status': {'readonly': True},
-        'substatus': {'readonly': True},
-        'error_code': {'readonly': True},
-        'error_message': {'readonly': True},
-        'last_updated_date_time_utc': {'readonly': True},
-        'etag': {'readonly': True},
+        "registration_id": {"readonly": True},
+        "created_date_time_utc": {"readonly": True},
+        "assigned_hub": {"readonly": True},
+        "device_id": {"readonly": True},
+        "status": {"readonly": True},
+        "substatus": {"readonly": True},
+        "error_code": {"readonly": True},
+        "error_message": {"readonly": True},
+        "last_updated_date_time_utc": {"readonly": True},
+        "etag": {"readonly": True},
     }
 
     _attribute_map = {
-        'registration_id': {'key': 'registrationId', 'type': 'str'},
-        'created_date_time_utc': {'key': 'createdDateTimeUtc', 'type': 'iso-8601'},
-        'assigned_hub': {'key': 'assignedHub', 'type': 'str'},
-        'device_id': {'key': 'deviceId', 'type': 'str'},
-        'status': {'key': 'status', 'type': 'str'},
-        'substatus': {'key': 'substatus', 'type': 'str'},
-        'error_code': {'key': 'errorCode', 'type': 'int'},
-        'error_message': {'key': 'errorMessage', 'type': 'str'},
-        'last_updated_date_time_utc': {'key': 'lastUpdatedDateTimeUtc', 'type': 'iso-8601'},
-        'etag': {'key': 'etag', 'type': 'str'},
+        "registration_id": {"key": "registrationId", "type": "str"},
+        "created_date_time_utc": {"key": "createdDateTimeUtc", "type": "iso-8601"},
+        "assigned_hub": {"key": "assignedHub", "type": "str"},
+        "device_id": {"key": "deviceId", "type": "str"},
+        "status": {"key": "status", "type": "str"},
+        "substatus": {"key": "substatus", "type": "str"},
+        "error_code": {"key": "errorCode", "type": "int"},
+        "error_message": {"key": "errorMessage", "type": "str"},
+        "last_updated_date_time_utc": {"key": "lastUpdatedDateTimeUtc", "type": "iso-8601"},
+        "etag": {"key": "etag", "type": "str"},
     }
 
     def __init__(self, **kwargs) -> None:

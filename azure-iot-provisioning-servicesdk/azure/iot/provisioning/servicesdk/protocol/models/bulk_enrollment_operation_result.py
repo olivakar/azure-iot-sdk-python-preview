@@ -20,16 +20,14 @@ class BulkEnrollmentOperationResult(Model):
     :type errors: list[~protocol.models.BulkEnrollmentOperationError]
     """
 
-    _validation = {
-        'is_successful': {'required': True},
-    }
+    _validation = {"is_successful": {"required": True}}
 
     _attribute_map = {
-        'is_successful': {'key': 'isSuccessful', 'type': 'bool'},
-        'errors': {'key': 'errors', 'type': '[BulkEnrollmentOperationError]'},
+        "is_successful": {"key": "isSuccessful", "type": "bool"},
+        "errors": {"key": "errors", "type": "[BulkEnrollmentOperationError]"},
     }
 
     def __init__(self, **kwargs):
         super(BulkEnrollmentOperationResult, self).__init__(**kwargs)
-        self.is_successful = kwargs.get('is_successful', None)
-        self.errors = kwargs.get('errors', None)
+        self.is_successful = kwargs.get("is_successful", None)
+        self.errors = kwargs.get("errors", None)

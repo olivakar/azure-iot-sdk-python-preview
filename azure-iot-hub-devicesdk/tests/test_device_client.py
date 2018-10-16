@@ -4,7 +4,9 @@
 # --------------------------------------------------------------------------------------------
 
 from azure.iot.hub.devicesdk.device_client import DeviceClient
-from azure.iot.hub.devicesdk.symmetric_key_authentication_provider import SymmetricKeyAuthenticationProvider
+from azure.iot.hub.devicesdk.symmetric_key_authentication_provider import (
+    SymmetricKeyAuthenticationProvider,
+)
 from azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport import MQTTTransport
 from azure.iot.hub.devicesdk.transport.transport_config import TransportConfig, TransportProtocol
 import pytest

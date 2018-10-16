@@ -3,7 +3,9 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from azure.iot.hub.devicesdk.symmetric_key_authentication_provider import SymmetricKeyAuthenticationProvider
+from azure.iot.hub.devicesdk.symmetric_key_authentication_provider import (
+    SymmetricKeyAuthenticationProvider,
+)
 import pytest
 
 

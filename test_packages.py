@@ -10,8 +10,10 @@ import glob
 import os
 from subprocess import check_call
 
-if __name__ == '__main__':
-    packages = [os.path.dirname(p) for p in glob.glob('azure*/setup.py')]
+if __name__ == "__main__":
+    packages = [os.path.dirname(p) for p in glob.glob("azure*/setup.py")]
     for package_name in packages:
-        command = "pytest {} --junitxml=junit/{}-test-results.xml".format(package_name, package_name)
+        command = "pytest {} --junitxml=junit/{}-test-results.xml".format(
+            package_name, package_name
+        )
         check_call(command.split())

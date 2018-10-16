@@ -6,7 +6,14 @@
 import os
 import argparse
 from azure.iot.sdk.provisioning.service import ProvisioningServiceClient
-from azure.iot.sdk.provisioning.service.models import (BulkEnrollmentOperation, IndividualEnrollment, AttestationMechanism, TpmAttestation, QuerySpecification)
+from azure.iot.sdk.provisioning.service.models import (
+    BulkEnrollmentOperation,
+    IndividualEnrollment,
+    AttestationMechanism,
+    TpmAttestation,
+    QuerySpecification,
+)
+
 
 def run_sample(cs, ek):
     client = ProvisioningServiceClient(connection_string=cs)
@@ -15,7 +22,9 @@ def run_sample(cs, ek):
     tpm = TpmAttestation(endorsement_key=ek)
     am = AttestationMechanism(type="tpm", tpm=tpm)
     ie = IndividualEnrollment(registration_id="reg-id", attestation=am)
-    ie = client.create_or_update_individual_enrollment(id=ie.registration_id, enrollment=ie) #returns like a get operation
+    ie = client.create_or_update_individual_enrollment(
+        id=ie.registration_id, enrollment=ie
+    )  # returns like a get operation
     print("Complete!")
 
     print("Updating Individual Enrollment...")
@@ -43,15 +52,26 @@ def run_sample(cs, ek):
     client.run_bulk_enrollment_operation(bulk_operation=bulk_op)
     print("Complete!")
 
+
 if __name__ == "__main__":
     connection_string_env = "ProvisioningServiceConnectionString"
     endorsement_key_env = "ProvisioningTpmEndorsementKey"
 
     parser = argparse.ArgumentParser("Run a Provisioning Service sample")
-    parser.add_argument("--connection_string", "-cs", default=os.environ.get(connection_string_env, None),
-                        help="Provisioning Service Connection String. [default: {} environment variable".format(connection_string_env))
-    parser.add_argument("--endorsement_key", "-ek", default=os.environ.get(endorsement_key_env, None),
-                        help="TPM Endorsement Key. [default: {} environment variable]".format(endorsement_key_env))
+    parser.add_argument(
+        "--connection_string",
+        "-cs",
+        default=os.environ.get(connection_string_env, None),
+        help="Provisioning Service Connection String. [default: {} environment variable".format(
+            connection_string_env
+        ),
+    )
+    parser.add_argument(
+        "--endorsement_key",
+        "-ek",
+        default=os.environ.get(endorsement_key_env, None),
+        help="TPM Endorsement Key. [default: {} environment variable]".format(endorsement_key_env),
+    )
     args = parser.parse_args()
 
     try:

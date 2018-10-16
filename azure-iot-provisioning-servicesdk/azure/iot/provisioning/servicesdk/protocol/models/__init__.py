@@ -6,7 +6,10 @@
 # --------------------------------------------------------------------------
 
 try:
-    from .provisioning_service_error_details_py3 import ProvisioningServiceErrorDetails, ProvisioningServiceErrorDetailsException
+    from .provisioning_service_error_details_py3 import (
+        ProvisioningServiceErrorDetails,
+        ProvisioningServiceErrorDetailsException,
+    )
     from .device_capabilities_py3 import DeviceCapabilities
     from .device_registration_state_py3 import DeviceRegistrationState
     from .tpm_attestation_py3 import TpmAttestation
@@ -30,7 +33,10 @@ try:
     from .bulk_enrollment_operation_result_py3 import BulkEnrollmentOperationResult
     from .query_specification_py3 import QuerySpecification
 except (SyntaxError, ImportError):
-    from .provisioning_service_error_details import ProvisioningServiceErrorDetails, ProvisioningServiceErrorDetailsException
+    from .provisioning_service_error_details import (
+        ProvisioningServiceErrorDetails,
+        ProvisioningServiceErrorDetailsException,
+    )
     from .device_capabilities import DeviceCapabilities
     from .device_registration_state import DeviceRegistrationState
     from .tpm_attestation import TpmAttestation
@@ -55,27 +61,28 @@ except (SyntaxError, ImportError):
     from .query_specification import QuerySpecification
 
 __all__ = [
-    'ProvisioningServiceErrorDetails', 'ProvisioningServiceErrorDetailsException',
-    'DeviceCapabilities',
-    'DeviceRegistrationState',
-    'TpmAttestation',
-    'X509CertificateInfo',
-    'X509CertificateWithInfo',
-    'X509Certificates',
-    'X509CAReferences',
-    'X509Attestation',
-    'SymmetricKeyAttestation',
-    'AttestationMechanism',
-    'Metadata',
-    'TwinCollection',
-    'InitialTwinProperties',
-    'InitialTwin',
-    'ReprovisionPolicy',
-    'CustomAllocationDefinition',
-    'IndividualEnrollment',
-    'EnrollmentGroup',
-    'BulkEnrollmentOperation',
-    'BulkEnrollmentOperationError',
-    'BulkEnrollmentOperationResult',
-    'QuerySpecification',
+    "ProvisioningServiceErrorDetails",
+    "ProvisioningServiceErrorDetailsException",
+    "DeviceCapabilities",
+    "DeviceRegistrationState",
+    "TpmAttestation",
+    "X509CertificateInfo",
+    "X509CertificateWithInfo",
+    "X509Certificates",
+    "X509CAReferences",
+    "X509Attestation",
+    "SymmetricKeyAttestation",
+    "AttestationMechanism",
+    "Metadata",
+    "TwinCollection",
+    "InitialTwinProperties",
+    "InitialTwin",
+    "ReprovisionPolicy",
+    "CustomAllocationDefinition",
+    "IndividualEnrollment",
+    "EnrollmentGroup",
+    "BulkEnrollmentOperation",
+    "BulkEnrollmentOperationError",
+    "BulkEnrollmentOperationResult",
+    "QuerySpecification",
 ]

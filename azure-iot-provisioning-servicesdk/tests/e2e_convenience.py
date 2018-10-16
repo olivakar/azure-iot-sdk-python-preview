@@ -3,8 +3,15 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from azure.iot.provisioning.servicesdk.models import TpmAttestation, X509CertificateWithInfo, \
-    X509Attestation, X509CAReferences, AttestationMechanism, X509Certificates
+from azure.iot.provisioning.servicesdk.models import (
+    TpmAttestation,
+    X509CertificateWithInfo,
+    X509Attestation,
+    X509CAReferences,
+    AttestationMechanism,
+    X509Certificates,
+)
+
 
 def _patch_attestation_mechanism():
     """Add convenience methods to Attestation Mechanism for ease of use
@@ -69,7 +76,18 @@ def _patch_attestation_mechanism():
         return cls(type="x509", x509=x509)
 
     setattr(AttestationMechanism, "create_with_tpm", classmethod(create_with_tpm))
-    setattr(AttestationMechanism, "create_with_x509_client_certificates", classmethod(create_with_x509_client_certificates))
-    setattr(AttestationMechanism, "create_with_x509_signing_certificates", classmethod(create_with_x509_signing_certificates))
-    setattr(AttestationMechanism, "create_with_x509_ca_references", classmethod(create_with_x509_ca_references))
-    
+    setattr(
+        AttestationMechanism,
+        "create_with_x509_client_certificates",
+        classmethod(create_with_x509_client_certificates),
+    )
+    setattr(
+        AttestationMechanism,
+        "create_with_x509_signing_certificates",
+        classmethod(create_with_x509_signing_certificates),
+    )
+    setattr(
+        AttestationMechanism,
+        "create_with_x509_ca_references",
+        classmethod(create_with_x509_ca_references),
+    )

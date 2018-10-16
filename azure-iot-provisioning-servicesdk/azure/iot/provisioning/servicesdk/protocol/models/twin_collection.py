@@ -23,15 +23,15 @@ class TwinCollection(Model):
     """
 
     _attribute_map = {
-        'additional_properties': {'key': '', 'type': '{object}'},
-        'version': {'key': 'version', 'type': 'long'},
-        'count': {'key': 'count', 'type': 'int'},
-        'metadata': {'key': 'metadata', 'type': 'Metadata'},
+        "additional_properties": {"key": "", "type": "{object}"},
+        "version": {"key": "version", "type": "long"},
+        "count": {"key": "count", "type": "int"},
+        "metadata": {"key": "metadata", "type": "Metadata"},
     }
 
     def __init__(self, **kwargs):
         super(TwinCollection, self).__init__(**kwargs)
-        self.additional_properties = kwargs.get('additional_properties', None)
-        self.version = kwargs.get('version', None)
-        self.count = kwargs.get('count', None)
-        self.metadata = kwargs.get('metadata', None)
+        self.additional_properties = kwargs.get("additional_properties", None)
+        self.version = kwargs.get("version", None)
+        self.count = kwargs.get("count", None)
+        self.metadata = kwargs.get("metadata", None)

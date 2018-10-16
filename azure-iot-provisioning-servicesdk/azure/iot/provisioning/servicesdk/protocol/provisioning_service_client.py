@@ -23,17 +23,16 @@ class ProvisioningServiceClientConfiguration(Configuration):
     :param str base_url: Service URL
     """
 
-    def __init__(
-            self, credentials, base_url=None):
+    def __init__(self, credentials, base_url=None):
 
         if credentials is None:
             raise ValueError("Parameter 'credentials' must not be None.")
         if not base_url:
-            base_url = 'https://localhost'
+            base_url = "https://localhost"
 
         super(ProvisioningServiceClientConfiguration, self).__init__(base_url)
 
-        self.add_user_agent('provisioningserviceclient/{}'.format(VERSION))
+        self.add_user_agent("provisioningserviceclient/{}".format(VERSION))
 
         self.credentials = credentials
 
@@ -50,20 +49,17 @@ class ProvisioningServiceClient(SDKClient):
     :param str base_url: Service URL
     """
 
-    def __init__(
-            self, credentials, base_url=None):
+    def __init__(self, credentials, base_url=None):
 
         self.config = ProvisioningServiceClientConfiguration(credentials, base_url)
         super(ProvisioningServiceClient, self).__init__(self.config.credentials, self.config)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
-        self.api_version = '2018-09-01-preview'
+        self.api_version = "2018-09-01-preview"
         self._serialize = Serializer(client_models)
         self._deserialize = Deserializer(client_models)
 
-
-    def get_individual_enrollment(
-            self, id, custom_headers=None, raw=False, **operation_config):
+    def get_individual_enrollment(self, id, custom_headers=None, raw=False, **operation_config):
         """Get a device enrollment record.
 
         :param id: Registration ID.
@@ -80,19 +76,19 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.get_individual_enrollment.metadata['url']
-        path_format_arguments = {
-            'id': self._serialize.url("id", id, 'str')
-        }
+        url = self.get_individual_enrollment.metadata["url"]
+        path_format_arguments = {"id": self._serialize.url("id", id, "str")}
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Accept"] = "application/json"
         if custom_headers:
             header_parameters.update(custom_headers)
 
@@ -106,17 +102,19 @@ class ProvisioningServiceClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('IndividualEnrollment', response)
+            deserialized = self._deserialize("IndividualEnrollment", response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    get_individual_enrollment.metadata = {'url': '/enrollments/{id}'}
+
+    get_individual_enrollment.metadata = {"url": "/enrollments/{id}"}
 
     def create_or_update_individual_enrollment(
-            self, id, enrollment, if_match=None, custom_headers=None, raw=False, **operation_config):
+        self, id, enrollment, if_match=None, custom_headers=None, raw=False, **operation_config
+    ):
         """Create or update a device enrollment record.
 
         :param id: The registration ID is alphanumeric, lowercase, and may
@@ -138,27 +136,27 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.create_or_update_individual_enrollment.metadata['url']
-        path_format_arguments = {
-            'id': self._serialize.url("id", id, 'str')
-        }
+        url = self.create_or_update_individual_enrollment.metadata["url"]
+        path_format_arguments = {"id": self._serialize.url("id", id, "str")}
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        header_parameters["Accept"] = "application/json"
+        header_parameters["Content-Type"] = "application/json; charset=utf-8"
         if custom_headers:
             header_parameters.update(custom_headers)
         if if_match is not None:
-            header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
+            header_parameters["If-Match"] = self._serialize.header("if_match", if_match, "str")
 
         # Construct body
-        body_content = self._serialize.body(enrollment, 'IndividualEnrollment')
+        body_content = self._serialize.body(enrollment, "IndividualEnrollment")
 
         # Construct and send request
         request = self._client.put(url, query_parameters, header_parameters, body_content)
@@ -170,17 +168,19 @@ class ProvisioningServiceClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('IndividualEnrollment', response)
+            deserialized = self._deserialize("IndividualEnrollment", response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    create_or_update_individual_enrollment.metadata = {'url': '/enrollments/{id}'}
+
+    create_or_update_individual_enrollment.metadata = {"url": "/enrollments/{id}"}
 
     def delete_individual_enrollment(
-            self, id, if_match=None, custom_headers=None, raw=False, **operation_config):
+        self, id, if_match=None, custom_headers=None, raw=False, **operation_config
+    ):
         """Delete a device enrollment record.
 
         :param id: Registration ID.
@@ -198,22 +198,22 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.delete_individual_enrollment.metadata['url']
-        path_format_arguments = {
-            'id': self._serialize.url("id", id, 'str')
-        }
+        url = self.delete_individual_enrollment.metadata["url"]
+        path_format_arguments = {"id": self._serialize.url("id", id, "str")}
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
         if custom_headers:
             header_parameters.update(custom_headers)
         if if_match is not None:
-            header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
+            header_parameters["If-Match"] = self._serialize.header("if_match", if_match, "str")
 
         # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
@@ -225,10 +225,10 @@ class ProvisioningServiceClient(SDKClient):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
-    delete_individual_enrollment.metadata = {'url': '/enrollments/{id}'}
 
-    def get_enrollment_group(
-            self, id, custom_headers=None, raw=False, **operation_config):
+    delete_individual_enrollment.metadata = {"url": "/enrollments/{id}"}
+
+    def get_enrollment_group(self, id, custom_headers=None, raw=False, **operation_config):
         """Get a device enrollment group.
 
         :param id: Enrollment group ID.
@@ -245,19 +245,19 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.get_enrollment_group.metadata['url']
-        path_format_arguments = {
-            'id': self._serialize.url("id", id, 'str')
-        }
+        url = self.get_enrollment_group.metadata["url"]
+        path_format_arguments = {"id": self._serialize.url("id", id, "str")}
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Accept"] = "application/json"
         if custom_headers:
             header_parameters.update(custom_headers)
 
@@ -271,17 +271,25 @@ class ProvisioningServiceClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('EnrollmentGroup', response)
+            deserialized = self._deserialize("EnrollmentGroup", response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    get_enrollment_group.metadata = {'url': '/enrollmentGroups/{id}'}
+
+    get_enrollment_group.metadata = {"url": "/enrollmentGroups/{id}"}
 
     def create_or_update_enrollment_group(
-            self, id, enrollment_group, if_match=None, custom_headers=None, raw=False, **operation_config):
+        self,
+        id,
+        enrollment_group,
+        if_match=None,
+        custom_headers=None,
+        raw=False,
+        **operation_config
+    ):
         """Create or update a device enrollment group.
 
         :param id: Enrollment group ID.
@@ -302,27 +310,27 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.create_or_update_enrollment_group.metadata['url']
-        path_format_arguments = {
-            'id': self._serialize.url("id", id, 'str')
-        }
+        url = self.create_or_update_enrollment_group.metadata["url"]
+        path_format_arguments = {"id": self._serialize.url("id", id, "str")}
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        header_parameters["Accept"] = "application/json"
+        header_parameters["Content-Type"] = "application/json; charset=utf-8"
         if custom_headers:
             header_parameters.update(custom_headers)
         if if_match is not None:
-            header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
+            header_parameters["If-Match"] = self._serialize.header("if_match", if_match, "str")
 
         # Construct body
-        body_content = self._serialize.body(enrollment_group, 'EnrollmentGroup')
+        body_content = self._serialize.body(enrollment_group, "EnrollmentGroup")
 
         # Construct and send request
         request = self._client.put(url, query_parameters, header_parameters, body_content)
@@ -334,17 +342,19 @@ class ProvisioningServiceClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('EnrollmentGroup', response)
+            deserialized = self._deserialize("EnrollmentGroup", response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    create_or_update_enrollment_group.metadata = {'url': '/enrollmentGroups/{id}'}
+
+    create_or_update_enrollment_group.metadata = {"url": "/enrollmentGroups/{id}"}
 
     def delete_enrollment_group(
-            self, id, if_match=None, custom_headers=None, raw=False, **operation_config):
+        self, id, if_match=None, custom_headers=None, raw=False, **operation_config
+    ):
         """Delete a device enrollment group.
 
         :param id: Enrollment group ID.
@@ -362,22 +372,22 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.delete_enrollment_group.metadata['url']
-        path_format_arguments = {
-            'id': self._serialize.url("id", id, 'str')
-        }
+        url = self.delete_enrollment_group.metadata["url"]
+        path_format_arguments = {"id": self._serialize.url("id", id, "str")}
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
         if custom_headers:
             header_parameters.update(custom_headers)
         if if_match is not None:
-            header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
+            header_parameters["If-Match"] = self._serialize.header("if_match", if_match, "str")
 
         # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
@@ -389,10 +399,10 @@ class ProvisioningServiceClient(SDKClient):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
-    delete_enrollment_group.metadata = {'url': '/enrollmentGroups/{id}'}
 
-    def get_device_registration_state(
-            self, id, custom_headers=None, raw=False, **operation_config):
+    delete_enrollment_group.metadata = {"url": "/enrollmentGroups/{id}"}
+
+    def get_device_registration_state(self, id, custom_headers=None, raw=False, **operation_config):
         """Gets the device registration state.
 
         :param id: Registration ID.
@@ -409,19 +419,19 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.get_device_registration_state.metadata['url']
-        path_format_arguments = {
-            'id': self._serialize.url("id", id, 'str')
-        }
+        url = self.get_device_registration_state.metadata["url"]
+        path_format_arguments = {"id": self._serialize.url("id", id, "str")}
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Accept"] = "application/json"
         if custom_headers:
             header_parameters.update(custom_headers)
 
@@ -435,17 +445,19 @@ class ProvisioningServiceClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('DeviceRegistrationState', response)
+            deserialized = self._deserialize("DeviceRegistrationState", response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    get_device_registration_state.metadata = {'url': '/registrations/{id}'}
+
+    get_device_registration_state.metadata = {"url": "/registrations/{id}"}
 
     def delete_device_registration_state(
-            self, id, if_match=None, custom_headers=None, raw=False, **operation_config):
+        self, id, if_match=None, custom_headers=None, raw=False, **operation_config
+    ):
         """Deletes the device registration.
 
         :param id: Registration ID.
@@ -463,22 +475,22 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.delete_device_registration_state.metadata['url']
-        path_format_arguments = {
-            'id': self._serialize.url("id", id, 'str')
-        }
+        url = self.delete_device_registration_state.metadata["url"]
+        path_format_arguments = {"id": self._serialize.url("id", id, "str")}
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
         if custom_headers:
             header_parameters.update(custom_headers)
         if if_match is not None:
-            header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
+            header_parameters["If-Match"] = self._serialize.header("if_match", if_match, "str")
 
         # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
@@ -490,10 +502,12 @@ class ProvisioningServiceClient(SDKClient):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
-    delete_device_registration_state.metadata = {'url': '/registrations/{id}'}
+
+    delete_device_registration_state.metadata = {"url": "/registrations/{id}"}
 
     def run_bulk_enrollment_operation(
-            self, bulk_operation, custom_headers=None, raw=False, **operation_config):
+        self, bulk_operation, custom_headers=None, raw=False, **operation_config
+    ):
         """Bulk device enrollment operation.
 
         :param bulk_operation: Bulk operation.
@@ -511,21 +525,23 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.run_bulk_enrollment_operation.metadata['url']
+        url = self.run_bulk_enrollment_operation.metadata["url"]
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        header_parameters["Accept"] = "application/json"
+        header_parameters["Content-Type"] = "application/json; charset=utf-8"
         if custom_headers:
             header_parameters.update(custom_headers)
 
         # Construct body
-        body_content = self._serialize.body(bulk_operation, 'BulkEnrollmentOperation')
+        body_content = self._serialize.body(bulk_operation, "BulkEnrollmentOperation")
 
         # Construct and send request
         request = self._client.post(url, query_parameters, header_parameters, body_content)
@@ -537,17 +553,25 @@ class ProvisioningServiceClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('BulkEnrollmentOperationResult', response)
+            deserialized = self._deserialize("BulkEnrollmentOperationResult", response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    run_bulk_enrollment_operation.metadata = {'url': '/enrollments'}
+
+    run_bulk_enrollment_operation.metadata = {"url": "/enrollments"}
 
     def query_individual_enrollments(
-            self, query_specification, x_ms_max_item_count=None, x_ms_continuation=None, custom_headers=None, raw=False, **operation_config):
+        self,
+        query_specification,
+        x_ms_max_item_count=None,
+        x_ms_continuation=None,
+        custom_headers=None,
+        raw=False,
+        **operation_config
+    ):
         """Query the device enrollment records.
 
         :param query_specification: The query specification.
@@ -568,25 +592,31 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.query_individual_enrollments.metadata['url']
+        url = self.query_individual_enrollments.metadata["url"]
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        header_parameters["Accept"] = "application/json"
+        header_parameters["Content-Type"] = "application/json; charset=utf-8"
         if custom_headers:
             header_parameters.update(custom_headers)
         if x_ms_max_item_count is not None:
-            header_parameters['x-ms-max-item-count'] = self._serialize.header("x_ms_max_item_count", x_ms_max_item_count, 'int')
+            header_parameters["x-ms-max-item-count"] = self._serialize.header(
+                "x_ms_max_item_count", x_ms_max_item_count, "int"
+            )
         if x_ms_continuation is not None:
-            header_parameters['x-ms-continuation'] = self._serialize.header("x_ms_continuation", x_ms_continuation, 'str')
+            header_parameters["x-ms-continuation"] = self._serialize.header(
+                "x_ms_continuation", x_ms_continuation, "str"
+            )
 
         # Construct body
-        body_content = self._serialize.body(query_specification, 'QuerySpecification')
+        body_content = self._serialize.body(query_specification, "QuerySpecification")
 
         # Construct and send request
         request = self._client.post(url, query_parameters, header_parameters, body_content)
@@ -599,11 +629,11 @@ class ProvisioningServiceClient(SDKClient):
         header_dict = {}
 
         if response.status_code == 200:
-            deserialized = self._deserialize('[IndividualEnrollment]', response)
+            deserialized = self._deserialize("[IndividualEnrollment]", response)
             header_dict = {
-                'x-ms-continuation': 'str',
-                'x-ms-max-item-count': 'int',
-                'x-ms-item-type': 'str',
+                "x-ms-continuation": "str",
+                "x-ms-max-item-count": "int",
+                "x-ms-item-type": "str",
             }
 
         if raw:
@@ -612,10 +642,12 @@ class ProvisioningServiceClient(SDKClient):
             return client_raw_response
 
         return deserialized
-    query_individual_enrollments.metadata = {'url': '/enrollments/query'}
+
+    query_individual_enrollments.metadata = {"url": "/enrollments/query"}
 
     def get_individual_enrollment_attestation_mechanism(
-            self, id, custom_headers=None, raw=False, **operation_config):
+        self, id, custom_headers=None, raw=False, **operation_config
+    ):
         """Get the attestation mechanism in the device enrollment record.
 
         :param id: Registration ID.
@@ -632,19 +664,19 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.get_individual_enrollment_attestation_mechanism.metadata['url']
-        path_format_arguments = {
-            'id': self._serialize.url("id", id, 'str')
-        }
+        url = self.get_individual_enrollment_attestation_mechanism.metadata["url"]
+        path_format_arguments = {"id": self._serialize.url("id", id, "str")}
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Accept"] = "application/json"
         if custom_headers:
             header_parameters.update(custom_headers)
 
@@ -658,17 +690,27 @@ class ProvisioningServiceClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('AttestationMechanism', response)
+            deserialized = self._deserialize("AttestationMechanism", response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    get_individual_enrollment_attestation_mechanism.metadata = {'url': '/enrollments/{id}/attestationmechanism'}
+
+    get_individual_enrollment_attestation_mechanism.metadata = {
+        "url": "/enrollments/{id}/attestationmechanism"
+    }
 
     def query_enrollment_groups(
-            self, query_specification, x_ms_max_item_count=None, x_ms_continuation=None, custom_headers=None, raw=False, **operation_config):
+        self,
+        query_specification,
+        x_ms_max_item_count=None,
+        x_ms_continuation=None,
+        custom_headers=None,
+        raw=False,
+        **operation_config
+    ):
         """Query the device enrollment groups.
 
         :param query_specification: The query specification.
@@ -689,25 +731,31 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.query_enrollment_groups.metadata['url']
+        url = self.query_enrollment_groups.metadata["url"]
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        header_parameters["Accept"] = "application/json"
+        header_parameters["Content-Type"] = "application/json; charset=utf-8"
         if custom_headers:
             header_parameters.update(custom_headers)
         if x_ms_max_item_count is not None:
-            header_parameters['x-ms-max-item-count'] = self._serialize.header("x_ms_max_item_count", x_ms_max_item_count, 'int')
+            header_parameters["x-ms-max-item-count"] = self._serialize.header(
+                "x_ms_max_item_count", x_ms_max_item_count, "int"
+            )
         if x_ms_continuation is not None:
-            header_parameters['x-ms-continuation'] = self._serialize.header("x_ms_continuation", x_ms_continuation, 'str')
+            header_parameters["x-ms-continuation"] = self._serialize.header(
+                "x_ms_continuation", x_ms_continuation, "str"
+            )
 
         # Construct body
-        body_content = self._serialize.body(query_specification, 'QuerySpecification')
+        body_content = self._serialize.body(query_specification, "QuerySpecification")
 
         # Construct and send request
         request = self._client.post(url, query_parameters, header_parameters, body_content)
@@ -720,11 +768,11 @@ class ProvisioningServiceClient(SDKClient):
         header_dict = {}
 
         if response.status_code == 200:
-            deserialized = self._deserialize('[EnrollmentGroup]', response)
+            deserialized = self._deserialize("[EnrollmentGroup]", response)
             header_dict = {
-                'x-ms-continuation': 'str',
-                'x-ms-max-item-count': 'int',
-                'x-ms-item-type': 'str',
+                "x-ms-continuation": "str",
+                "x-ms-max-item-count": "int",
+                "x-ms-item-type": "str",
             }
 
         if raw:
@@ -733,10 +781,12 @@ class ProvisioningServiceClient(SDKClient):
             return client_raw_response
 
         return deserialized
-    query_enrollment_groups.metadata = {'url': '/enrollmentGroups/query'}
+
+    query_enrollment_groups.metadata = {"url": "/enrollmentGroups/query"}
 
     def get_enrollment_group_attestation_mechanism(
-            self, id, custom_headers=None, raw=False, **operation_config):
+        self, id, custom_headers=None, raw=False, **operation_config
+    ):
         """Get the attestation mechanism in the device enrollment group record.
 
         :param id: Enrollment group ID
@@ -753,19 +803,19 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.get_enrollment_group_attestation_mechanism.metadata['url']
-        path_format_arguments = {
-            'id': self._serialize.url("id", id, 'str')
-        }
+        url = self.get_enrollment_group_attestation_mechanism.metadata["url"]
+        path_format_arguments = {"id": self._serialize.url("id", id, "str")}
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Accept"] = "application/json"
         if custom_headers:
             header_parameters.update(custom_headers)
 
@@ -779,17 +829,21 @@ class ProvisioningServiceClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('AttestationMechanism', response)
+            deserialized = self._deserialize("AttestationMechanism", response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    get_enrollment_group_attestation_mechanism.metadata = {'url': '/enrollmentGroups/{id}/attestationmechanism'}
+
+    get_enrollment_group_attestation_mechanism.metadata = {
+        "url": "/enrollmentGroups/{id}/attestationmechanism"
+    }
 
     def query_device_registration_states(
-            self, id, custom_headers=None, raw=False, **operation_config):
+        self, id, custom_headers=None, raw=False, **operation_config
+    ):
         """Gets the registration state of devices in this enrollmentGroup.
 
         :param id: Enrollment group ID.
@@ -806,19 +860,19 @@ class ProvisioningServiceClient(SDKClient):
          :class:`ProvisioningServiceErrorDetailsException<protocol.models.ProvisioningServiceErrorDetailsException>`
         """
         # Construct URL
-        url = self.query_device_registration_states.metadata['url']
-        path_format_arguments = {
-            'id': self._serialize.url("id", id, 'str')
-        }
+        url = self.query_device_registration_states.metadata["url"]
+        path_format_arguments = {"id": self._serialize.url("id", id, "str")}
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query(
+            "self.api_version", self.api_version, "str"
+        )
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Accept"] = "application/json"
         if custom_headers:
             header_parameters.update(custom_headers)
 
@@ -832,11 +886,12 @@ class ProvisioningServiceClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('[DeviceRegistrationState]', response)
+            deserialized = self._deserialize("[DeviceRegistrationState]", response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    query_device_registration_states.metadata = {'url': '/registrations/{id}/query'}
+
+    query_device_registration_states.metadata = {"url": "/registrations/{id}/query"}
