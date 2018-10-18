@@ -18,13 +18,14 @@ from mock import MagicMock
 hostname = "beauxbatons.academy-net"
 device_id = "MyFirebolt"
 password = "Fortuna Major"
+username = hostname + "/" + device_id
 
 
 def test_create():
-    provider = MQTTProvider(device_id, hostname, password)
-    assert provider._device_id == device_id
+    provider = MQTTProvider(device_id, hostname, username, password)
+    assert provider._client_id == device_id
     assert provider._hostname == hostname
-    assert provider._username == hostname + "/" + device_id
+    assert provider._username == username
     assert provider._password == password
     assert provider.on_mqtt_connected is not None
 
@@ -59,7 +60,7 @@ def test_on_enter_connecting(mocker):
     mocker.patch.object(mock_mqtt_client, "connect")
     mocker.patch.object(mock_mqtt_client, "loop_start")
 
-    mqtt_provider = MQTTProvider(device_id, hostname, password)
+    mqtt_provider = MQTTProvider(device_id, hostname, username, password)
     mqtt_provider._on_enter_connecting()
 
     MQTTProvider._emit_connection_status.assert_called_once_with()
@@ -84,7 +85,7 @@ def test_on_enter_connecting(mocker):
 def test_on_enter_disconnecting(mocker):
     mocker.patch.object(MQTTProvider, "_emit_connection_status")
 
-    mqtt_provider = MQTTProvider(device_id, hostname, password)
+    mqtt_provider = MQTTProvider(device_id, hostname, username, password)
     mqtt_provider._on_enter_disconnecting()
 
     MQTTProvider._emit_connection_status.assert_called_once_with()
@@ -97,7 +98,7 @@ def test_connect(mocker):
     )
     mock_machine_constructor.return_value = mock_machine_from_real
 
-    mqtt_provider = MQTTProvider(device_id, hostname, password)
+    mqtt_provider = MQTTProvider(device_id, hostname, username, password)
     mqtt_provider.connect()
 
     mock_machine_from_real.trig_connect.assert_called_once_with()
@@ -111,7 +112,7 @@ def test_disconnect(mocker):
     mock_constructor_mqtt_client.return_value = mock_mqtt_client
     mocker.patch.object(mock_mqtt_client, "loop_stop")
 
-    mqtt_provider = MQTTProvider(device_id, hostname, password)
+    mqtt_provider = MQTTProvider(device_id, hostname, username, password)
     mqtt_provider._on_enter_connecting()
     mqtt_provider.disconnect()
 
@@ -129,7 +130,7 @@ def test_publish(mocker):
     mock_constructor_mqtt_client.return_value = mock_mqtt_client
     mocker.patch.object(mock_mqtt_client, "publish")
 
-    mqtt_provider = MQTTProvider(device_id, hostname, password)
+    mqtt_provider = MQTTProvider(device_id, hostname, username, password)
     mqtt_provider._on_enter_connecting()
     mqtt_provider.publish(topic, event)
 
@@ -147,7 +148,7 @@ def test_emit_connection_status(mocker):
     connected_state = "connected"
     mock_machine_from_real.state = connected_state
 
-    mqtt_provider = MQTTProvider(device_id, hostname, password)
+    mqtt_provider = MQTTProvider(device_id, hostname, username, password)
     mqtt_provider.on_mqtt_connected = stub_on_connection_state
     mqtt_provider._emit_connection_status()
 
