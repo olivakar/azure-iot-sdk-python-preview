@@ -11,7 +11,7 @@ from msrest.exceptions import HttpOperationError
 
 class ProvisioningServiceErrorDetails(Model):
     """Contains the properties of an error returned by the Azure IoT Hub
-    Provisioning Service .
+    Provisioning Service.
 
     :param error_code:
     :type error_code: int
@@ -26,23 +26,14 @@ class ProvisioningServiceErrorDetails(Model):
     """
 
     _attribute_map = {
-        "error_code": {"key": "errorCode", "type": "int"},
-        "tracking_id": {"key": "trackingId", "type": "str"},
-        "message": {"key": "message", "type": "str"},
-        "info": {"key": "info", "type": "{str}"},
-        "timestamp_utc": {"key": "timestampUtc", "type": "iso-8601"},
+        'error_code': {'key': 'errorCode', 'type': 'int'},
+        'tracking_id': {'key': 'trackingId', 'type': 'str'},
+        'message': {'key': 'message', 'type': 'str'},
+        'info': {'key': 'info', 'type': '{str}'},
+        'timestamp_utc': {'key': 'timestampUtc', 'type': 'iso-8601'},
     }
 
-    def __init__(
-        self,
-        *,
-        error_code: int = None,
-        tracking_id: str = None,
-        message: str = None,
-        info=None,
-        timestamp_utc=None,
-        **kwargs
-    ) -> None:
+    def __init__(self, *, error_code: int=None, tracking_id: str=None, message: str=None, info=None, timestamp_utc=None, **kwargs) -> None:
         super(ProvisioningServiceErrorDetails, self).__init__(**kwargs)
         self.error_code = error_code
         self.tracking_id = tracking_id
@@ -60,6 +51,4 @@ class ProvisioningServiceErrorDetailsException(HttpOperationError):
 
     def __init__(self, deserialize, response, *args):
 
-        super(ProvisioningServiceErrorDetailsException, self).__init__(
-            deserialize, response, "ProvisioningServiceErrorDetails", *args
-        )
+        super(ProvisioningServiceErrorDetailsException, self).__init__(deserialize, response, 'ProvisioningServiceErrorDetails', *args)

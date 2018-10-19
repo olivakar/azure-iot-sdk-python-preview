@@ -18,11 +18,11 @@ class X509Certificates(Model):
     """
 
     _attribute_map = {
-        "primary": {"key": "primary", "type": "X509CertificateWithInfo"},
-        "secondary": {"key": "secondary", "type": "X509CertificateWithInfo"},
+        'primary': {'key': 'primary', 'type': 'X509CertificateWithInfo'},
+        'secondary': {'key': 'secondary', 'type': 'X509CertificateWithInfo'},
     }
 
     def __init__(self, **kwargs):
         super(X509Certificates, self).__init__(**kwargs)
-        self.primary = kwargs.get("primary", None)
-        self.secondary = kwargs.get("secondary", None)
+        self.primary = kwargs.get('primary', None)
+        self.secondary = kwargs.get('secondary', None)

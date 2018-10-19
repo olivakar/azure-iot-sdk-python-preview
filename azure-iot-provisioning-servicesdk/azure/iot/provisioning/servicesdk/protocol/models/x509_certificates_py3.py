@@ -18,8 +18,8 @@ class X509Certificates(Model):
     """
 
     _attribute_map = {
-        "primary": {"key": "primary", "type": "X509CertificateWithInfo"},
-        "secondary": {"key": "secondary", "type": "X509CertificateWithInfo"},
+        'primary': {'key': 'primary', 'type': 'X509CertificateWithInfo'},
+        'secondary': {'key': 'secondary', 'type': 'X509CertificateWithInfo'},
     }
 
     def __init__(self, *, primary=None, secondary=None, **kwargs) -> None:

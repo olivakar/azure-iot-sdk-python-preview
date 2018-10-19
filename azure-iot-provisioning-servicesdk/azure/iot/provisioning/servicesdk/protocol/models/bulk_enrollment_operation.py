@@ -20,14 +20,17 @@ class BulkEnrollmentOperation(Model):
     :type mode: str or ~protocol.models.enum
     """
 
-    _validation = {"enrollments": {"required": True}, "mode": {"required": True}}
+    _validation = {
+        'enrollments': {'required': True},
+        'mode': {'required': True},
+    }
 
     _attribute_map = {
-        "enrollments": {"key": "enrollments", "type": "[IndividualEnrollment]"},
-        "mode": {"key": "mode", "type": "str"},
+        'enrollments': {'key': 'enrollments', 'type': '[IndividualEnrollment]'},
+        'mode': {'key': 'mode', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
         super(BulkEnrollmentOperation, self).__init__(**kwargs)
-        self.enrollments = kwargs.get("enrollments", None)
-        self.mode = kwargs.get("mode", None)
+        self.enrollments = kwargs.get('enrollments', None)
+        self.mode = kwargs.get('mode', None)

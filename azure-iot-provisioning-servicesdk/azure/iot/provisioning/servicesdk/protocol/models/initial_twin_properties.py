@@ -15,8 +15,10 @@ class InitialTwinProperties(Model):
     :type desired: ~protocol.models.TwinCollection
     """
 
-    _attribute_map = {"desired": {"key": "desired", "type": "TwinCollection"}}
+    _attribute_map = {
+        'desired': {'key': 'desired', 'type': 'TwinCollection'},
+    }
 
     def __init__(self, **kwargs):
         super(InitialTwinProperties, self).__init__(**kwargs)
-        self.desired = kwargs.get("desired", None)
+        self.desired = kwargs.get('desired', None)

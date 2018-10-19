@@ -6,10 +6,7 @@
 # --------------------------------------------------------------------------
 
 try:
-    from .provisioning_service_error_details_py3 import (
-        ProvisioningServiceErrorDetails,
-        ProvisioningServiceErrorDetailsException,
-    )
+    from .provisioning_service_error_details_py3 import ProvisioningServiceErrorDetails, ProvisioningServiceErrorDetailsException
     from .device_capabilities_py3 import DeviceCapabilities
     from .device_registration_state_py3 import DeviceRegistrationState
     from .tpm_attestation_py3 import TpmAttestation
@@ -28,15 +25,12 @@ try:
     from .custom_allocation_definition_py3 import CustomAllocationDefinition
     from .individual_enrollment_py3 import IndividualEnrollment
     from .enrollment_group_py3 import EnrollmentGroup
+    from .query_specification_py3 import QuerySpecification
     from .bulk_enrollment_operation_py3 import BulkEnrollmentOperation
     from .bulk_enrollment_operation_error_py3 import BulkEnrollmentOperationError
     from .bulk_enrollment_operation_result_py3 import BulkEnrollmentOperationResult
-    from .query_specification_py3 import QuerySpecification
 except (SyntaxError, ImportError):
-    from .provisioning_service_error_details import (
-        ProvisioningServiceErrorDetails,
-        ProvisioningServiceErrorDetailsException,
-    )
+    from .provisioning_service_error_details import ProvisioningServiceErrorDetails, ProvisioningServiceErrorDetailsException
     from .device_capabilities import DeviceCapabilities
     from .device_registration_state import DeviceRegistrationState
     from .tpm_attestation import TpmAttestation
@@ -55,34 +49,35 @@ except (SyntaxError, ImportError):
     from .custom_allocation_definition import CustomAllocationDefinition
     from .individual_enrollment import IndividualEnrollment
     from .enrollment_group import EnrollmentGroup
+    from .query_specification import QuerySpecification
     from .bulk_enrollment_operation import BulkEnrollmentOperation
     from .bulk_enrollment_operation_error import BulkEnrollmentOperationError
     from .bulk_enrollment_operation_result import BulkEnrollmentOperationResult
-    from .query_specification import QuerySpecification
+from .individual_enrollment_paged import IndividualEnrollmentPaged
 
 __all__ = [
-    "ProvisioningServiceErrorDetails",
-    "ProvisioningServiceErrorDetailsException",
-    "DeviceCapabilities",
-    "DeviceRegistrationState",
-    "TpmAttestation",
-    "X509CertificateInfo",
-    "X509CertificateWithInfo",
-    "X509Certificates",
-    "X509CAReferences",
-    "X509Attestation",
-    "SymmetricKeyAttestation",
-    "AttestationMechanism",
-    "Metadata",
-    "TwinCollection",
-    "InitialTwinProperties",
-    "InitialTwin",
-    "ReprovisionPolicy",
-    "CustomAllocationDefinition",
-    "IndividualEnrollment",
-    "EnrollmentGroup",
-    "BulkEnrollmentOperation",
-    "BulkEnrollmentOperationError",
-    "BulkEnrollmentOperationResult",
-    "QuerySpecification",
+    'ProvisioningServiceErrorDetails', 'ProvisioningServiceErrorDetailsException',
+    'DeviceCapabilities',
+    'DeviceRegistrationState',
+    'TpmAttestation',
+    'X509CertificateInfo',
+    'X509CertificateWithInfo',
+    'X509Certificates',
+    'X509CAReferences',
+    'X509Attestation',
+    'SymmetricKeyAttestation',
+    'AttestationMechanism',
+    'Metadata',
+    'TwinCollection',
+    'InitialTwinProperties',
+    'InitialTwin',
+    'ReprovisionPolicy',
+    'CustomAllocationDefinition',
+    'IndividualEnrollment',
+    'EnrollmentGroup',
+    'QuerySpecification',
+    'BulkEnrollmentOperation',
+    'BulkEnrollmentOperationError',
+    'BulkEnrollmentOperationResult',
+    'IndividualEnrollmentPaged',
 ]

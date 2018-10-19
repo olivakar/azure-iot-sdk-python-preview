@@ -8,6 +8,7 @@
 from .provisioning_service_client import ProvisioningServiceClient
 from .version import VERSION
 
-__all__ = ["ProvisioningServiceClient"]
+__all__ = ['ProvisioningServiceClient']
 
 __version__ = VERSION
+

@@ -69,51 +69,32 @@ class IndividualEnrollment(Model):
     """
 
     _validation = {
-        "registration_id": {"required": True},
-        "registration_state": {"readonly": True},
-        "attestation": {"required": True},
-        "created_date_time_utc": {"readonly": True},
-        "last_updated_date_time_utc": {"readonly": True},
+        'registration_id': {'required': True},
+        'registration_state': {'readonly': True},
+        'attestation': {'required': True},
+        'created_date_time_utc': {'readonly': True},
+        'last_updated_date_time_utc': {'readonly': True},
     }
 
     _attribute_map = {
-        "capabilities": {"key": "capabilities", "type": "DeviceCapabilities"},
-        "registration_id": {"key": "registrationId", "type": "str"},
-        "device_id": {"key": "deviceId", "type": "str"},
-        "registration_state": {"key": "registrationState", "type": "DeviceRegistrationState"},
-        "attestation": {"key": "attestation", "type": "AttestationMechanism"},
-        "iot_hub_host_name": {"key": "iotHubHostName", "type": "str"},
-        "initial_twin": {"key": "initialTwin", "type": "InitialTwin"},
-        "etag": {"key": "etag", "type": "str"},
-        "provisioning_status": {"key": "provisioningStatus", "type": "str"},
-        "reprovision_policy": {"key": "reprovisionPolicy", "type": "ReprovisionPolicy"},
-        "created_date_time_utc": {"key": "createdDateTimeUtc", "type": "iso-8601"},
-        "last_updated_date_time_utc": {"key": "lastUpdatedDateTimeUtc", "type": "iso-8601"},
-        "allocation_policy": {"key": "allocationPolicy", "type": "str"},
-        "iot_hubs": {"key": "iotHubs", "type": "[str]"},
-        "custom_allocation_definition": {
-            "key": "customAllocationDefinition",
-            "type": "CustomAllocationDefinition",
-        },
+        'capabilities': {'key': 'capabilities', 'type': 'DeviceCapabilities'},
+        'registration_id': {'key': 'registrationId', 'type': 'str'},
+        'device_id': {'key': 'deviceId', 'type': 'str'},
+        'registration_state': {'key': 'registrationState', 'type': 'DeviceRegistrationState'},
+        'attestation': {'key': 'attestation', 'type': 'AttestationMechanism'},
+        'iot_hub_host_name': {'key': 'iotHubHostName', 'type': 'str'},
+        'initial_twin': {'key': 'initialTwin', 'type': 'InitialTwin'},
+        'etag': {'key': 'etag', 'type': 'str'},
+        'provisioning_status': {'key': 'provisioningStatus', 'type': 'str'},
+        'reprovision_policy': {'key': 'reprovisionPolicy', 'type': 'ReprovisionPolicy'},
+        'created_date_time_utc': {'key': 'createdDateTimeUtc', 'type': 'iso-8601'},
+        'last_updated_date_time_utc': {'key': 'lastUpdatedDateTimeUtc', 'type': 'iso-8601'},
+        'allocation_policy': {'key': 'allocationPolicy', 'type': 'str'},
+        'iot_hubs': {'key': 'iotHubs', 'type': '[str]'},
+        'custom_allocation_definition': {'key': 'customAllocationDefinition', 'type': 'CustomAllocationDefinition'},
     }
 
-    def __init__(
-        self,
-        *,
-        registration_id: str,
-        attestation,
-        capabilities=None,
-        device_id: str = None,
-        iot_hub_host_name: str = None,
-        initial_twin=None,
-        etag: str = None,
-        provisioning_status="enabled",
-        reprovision_policy=None,
-        allocation_policy=None,
-        iot_hubs=None,
-        custom_allocation_definition=None,
-        **kwargs
-    ) -> None:
+    def __init__(self, *, registration_id: str, attestation, capabilities=None, device_id: str=None, iot_hub_host_name: str=None, initial_twin=None, etag: str=None, provisioning_status="enabled", reprovision_policy=None, allocation_policy=None, iot_hubs=None, custom_allocation_definition=None, **kwargs) -> None:
         super(IndividualEnrollment, self).__init__(**kwargs)
         self.capabilities = capabilities
         self.registration_id = registration_id

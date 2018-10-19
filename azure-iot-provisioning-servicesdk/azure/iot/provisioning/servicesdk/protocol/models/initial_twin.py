@@ -18,11 +18,11 @@ class InitialTwin(Model):
     """
 
     _attribute_map = {
-        "tags": {"key": "tags", "type": "TwinCollection"},
-        "properties": {"key": "properties", "type": "InitialTwinProperties"},
+        'tags': {'key': 'tags', 'type': 'TwinCollection'},
+        'properties': {'key': 'properties', 'type': 'InitialTwinProperties'},
     }
 
     def __init__(self, **kwargs):
         super(InitialTwin, self).__init__(**kwargs)
-        self.tags = kwargs.get("tags", None)
-        self.properties = kwargs.get("properties", None)
+        self.tags = kwargs.get('tags', None)
+        self.properties = kwargs.get('properties', None)

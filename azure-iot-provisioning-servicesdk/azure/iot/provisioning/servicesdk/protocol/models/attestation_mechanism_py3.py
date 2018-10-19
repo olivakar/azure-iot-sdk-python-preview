@@ -24,13 +24,15 @@ class AttestationMechanism(Model):
     :type symmetric_key: ~protocol.models.SymmetricKeyAttestation
     """
 
-    _validation = {"type": {"required": True}}
+    _validation = {
+        'type': {'required': True},
+    }
 
     _attribute_map = {
-        "type": {"key": "type", "type": "str"},
-        "tpm": {"key": "tpm", "type": "TpmAttestation"},
-        "x509": {"key": "x509", "type": "X509Attestation"},
-        "symmetric_key": {"key": "symmetricKey", "type": "SymmetricKeyAttestation"},
+        'type': {'key': 'type', 'type': 'str'},
+        'tpm': {'key': 'tpm', 'type': 'TpmAttestation'},
+        'x509': {'key': 'x509', 'type': 'X509Attestation'},
+        'symmetric_key': {'key': 'symmetricKey', 'type': 'SymmetricKeyAttestation'},
     }
 
     def __init__(self, *, type, tpm=None, x509=None, symmetric_key=None, **kwargs) -> None:

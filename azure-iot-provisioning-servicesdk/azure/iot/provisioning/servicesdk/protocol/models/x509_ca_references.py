@@ -18,11 +18,11 @@ class X509CAReferences(Model):
     """
 
     _attribute_map = {
-        "primary": {"key": "primary", "type": "str"},
-        "secondary": {"key": "secondary", "type": "str"},
+        'primary': {'key': 'primary', 'type': 'str'},
+        'secondary': {'key': 'secondary', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
         super(X509CAReferences, self).__init__(**kwargs)
-        self.primary = kwargs.get("primary", None)
-        self.secondary = kwargs.get("secondary", None)
+        self.primary = kwargs.get('primary', None)
+        self.secondary = kwargs.get('secondary', None)
