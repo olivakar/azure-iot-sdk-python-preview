@@ -1,5 +1,5 @@
 from azure.iot.hub.devicesdk.internal_client import InternalClient
-from azure.iot.hub.devicesdk.symmetric_key_authentication_provider import SymmetricKeyAuthenticationProvider
+from azure.iot.hub.devicesdk.auth.authentication_provider_factory import from_connection_string
 from azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport import MQTTTransport
 from azure.iot.hub.devicesdk.transport.transport_config import TransportConfig, TransportProtocol
 import pytest
@@ -25,9 +25,7 @@ def connection_string():
 
 @pytest.fixture
 def authentication_provider(connection_string):
-    auth_provider = SymmetricKeyAuthenticationProvider.create_authentication_from_connection_string(
-        connection_string
-    )
+    auth_provider = from_connection_string(connection_string)
     return auth_provider
 
 

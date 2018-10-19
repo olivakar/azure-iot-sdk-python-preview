@@ -31,7 +31,7 @@ class InternalClient(object):
         self._transport = self._transport_config.get_specific_transport(self._auth_provider)
         self._transport.on_transport_connected = self._get_transport_connected_state_callback
         self._transport.connect()
-        self._emit_connection_status()
+        self._emit_connection_status()  # dont need this line
 
     def send_event(self, event):
         """
@@ -39,7 +39,7 @@ class InternalClient(object):
         The client must call this method to send messages.
         :param event: The actual message to send.
         """
-        if self.state is "connected":
+        if self.state is "connected": # no need for if else check
             self._transport.send_event(event)
         else:
             logging.error("Can not send if not connected")

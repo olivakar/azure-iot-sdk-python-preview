@@ -3,9 +3,6 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-import os
-import sys
-
 from azure.iot.common.connection_string import (
     ConnectionString,
     HOST_NAME,
@@ -17,9 +14,10 @@ from azure.iot.common.connection_string import (
     GATEWAY_HOST_NAME,
 )
 from azure.iot.common.sastoken import SasToken
+from .authentication_provider import AuthenticationProvider
 
 
-class SymmetricKeyAuthenticationProvider(object):
+class SymmetricKeyAuthenticationProvider(AuthenticationProvider):
     """
     A provider for authentication mechanism based on known authentication mechanisms ,
     including x509 and SAS based authentication.
@@ -47,16 +45,6 @@ class SymmetricKeyAuthenticationProvider(object):
         if parsed_connection_string.get(SHARED_ACCESS_KEY_NAME) is not None:
             self.shared_access_keyname = parsed_connection_string[SHARED_ACCESS_KEY_NAME]
 
-    @classmethod
-    def create_authentication_from_connection_string(cls, connection_string):
-        """
-        Parses the connection string and instantiates an authentication provider with the parsed connection string.
-        :param connection_string: The connection string of the client as set by the user.
-        :return: An authentication provider.
-        """
-        connection_string_obj = ConnectionString(connection_string)
-        return cls(connection_string_obj)
-
     def _sign(self):
         if self.module_id:
             uri = self.hostname + "/devices/" + self.device_id + "/modules/" + self.module_id
@@ -65,9 +53,9 @@ class SymmetricKeyAuthenticationProvider(object):
 
         sas_token = None
         if self.shared_access_keyname is not None:
-            sas_token = SasToken(uri, self.shared_access_key, self.shared_access_keyname)
+            sas_token = SasToken.create(uri, self.shared_access_key, self.shared_access_keyname)
         elif self.shared_access_key is not None:
-            sas_token = SasToken(uri, self.shared_access_key)
+            sas_token = SasToken.create(uri, self.shared_access_key)
         else:
             pass
         self.shared_access_signature_token = str(sas_token)

@@ -4,7 +4,7 @@
 # --------------------------------------------------------------------------------------------
 
 from .internal_client import InternalClient
-from .sk_authentication_provider import SymmetricKeyAuthenticationProvider
+from .auth.authentication_provider_factory import from_connection_string
 
 
 class ModuleClient(InternalClient):
@@ -19,4 +19,4 @@ class ModuleClient(InternalClient):
 
     @staticmethod
     def create_from_connection_string(connection_string, transport_config):
-        return ModuleClient(SymmetricKeyAuthenticationProvider.create_authentication_from_connection_string(connection_string), transport_config)
+        return ModuleClient(from_connection_string(connection_string), transport_config)
