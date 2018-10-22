@@ -1,7 +1,6 @@
 from azure.iot.hub.devicesdk.internal_client import InternalClient
 from azure.iot.hub.devicesdk.auth.authentication_provider_factory import from_connection_string
 from azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport import MQTTTransport
-from azure.iot.hub.devicesdk.transport.transport_config import TransportConfig, TransportProtocol
 import pytest
 
 from six import add_move, MovedModule
@@ -29,84 +28,52 @@ def authentication_provider(connection_string):
     return auth_provider
 
 
-@pytest.fixture
-def mqtt_transport_config():
-    return TransportConfig(TransportProtocol.MQTT)
-
-
-def test_connect(mocker, authentication_provider, mqtt_transport_config):
-    mocker.patch.object(InternalClient, "_emit_connection_status")
-    mocker.patch.object(MQTTTransport, "connect")
-
-    internal_client = InternalClient(authentication_provider, mqtt_transport_config)
-    assert internal_client.state == "initial"
-    assert internal_client._transport is None
-
-    internal_client.connect()
-
-    assert isinstance(internal_client._transport, MQTTTransport)
-
-    MQTTTransport.connect.assert_called_once_with()
-    InternalClient._emit_connection_status.assert_called_once_with()
-
-
-def test_get_transport_state(mocker, mqtt_transport_config):
-    stub_on_connection_state = mocker.stub(name="on_connection_state")
-
-    internal_client = InternalClient(authentication_provider, mqtt_transport_config)
-    internal_client.on_connection_state = stub_on_connection_state
-
-    new_state = "apparating"
-    internal_client._get_transport_connected_state_callback(new_state)
-
-    stub_on_connection_state.assert_called_once_with(new_state)
-
-
-def test_emit_connection_status(mocker, mqtt_transport_config):
-    stub_on_connection_state = mocker.stub(name="on_connection_state")
-
-    internal_client = InternalClient(authentication_provider, mqtt_transport_config)
-    internal_client.on_connection_state = stub_on_connection_state
-    new_state = "apparating"
-    internal_client.state = new_state
-
-    internal_client._emit_connection_status()
-
-    stub_on_connection_state.assert_called_once_with(new_state)
-
-
-def test_send_event_magic_mock(mocker, authentication_provider, mqtt_transport_config):
+def test_connect(authentication_provider):
     mock_transport = MagicMock(spec=MQTTTransport)
-    mock_transport_config = mocker.patch.object(TransportConfig, "get_specific_transport")
-    mock_transport_config.return_value = mock_transport
 
-    mocker.patch.object(mock_transport, "send_event")
-    mocker.patch.object(InternalClient, "_emit_connection_status")
+    device_client = InternalClient(authentication_provider, mock_transport)
+    assert device_client.state == "initial"
+
+    device_client.connect()
+
+    mock_transport.connect.assert_called_once_with()
+
+
+def test_get_transport_state(mocker, authentication_provider):
+    stub_on_connection_state = mocker.stub(name="on_connection_state")
+
+    mock_transport = MQTTTransport(authentication_provider)
+    device_client = InternalClient(authentication_provider, mock_transport)
+    device_client.on_connection_state = stub_on_connection_state
+
+    new_state = "apparating"
+    device_client._get_transport_connected_state_callback(new_state)
+
+    stub_on_connection_state.assert_called_once_with(new_state)
+
+
+def test_emit_connection_status(mocker, authentication_provider):
+    stub_on_connection_state = mocker.stub(name="on_connection_state")
+
+    mock_transport = MQTTTransport(authentication_provider)
+    device_client = InternalClient(authentication_provider, mock_transport)
+    device_client.on_connection_state = stub_on_connection_state
+    new_state = "apparating"
+    device_client.state = new_state
+
+    device_client._emit_connection_status()
+
+    stub_on_connection_state.assert_called_once_with(new_state)
+
+
+def test_send_event_magic_mock(authentication_provider):
+    mock_transport = MagicMock(spec=MQTTTransport)
 
     event = "Caput Draconis"
-    internal_client = InternalClient(authentication_provider, mqtt_transport_config)
-    assert internal_client.state == "initial"
-    assert internal_client._transport is None
-    internal_client.state = "connected"
-    internal_client.connect()
-    internal_client.send_event(event)
+    device_client = InternalClient(authentication_provider, mock_transport)
+    assert device_client.state == "initial"
+    device_client.state = "connected"
+    device_client.connect()
+    device_client.send_event(event)
 
-    TransportConfig.get_specific_transport.assert_called_once_with(authentication_provider)
     mock_transport.send_event.assert_called_once_with(event)
-    InternalClient._emit_connection_status.assert_called_once_with()
-
-
-def test_send_event_error(mocker, authentication_provider, mqtt_transport_config):
-    mocker.patch.object(TransportConfig, "get_specific_transport")
-    mocker.patch.object(InternalClient, "_emit_connection_status")
-
-    with pytest.raises(ValueError, match="No connection present to send event."):
-        event = "Caput Draconis"
-        internal_client = InternalClient(authentication_provider, mqtt_transport_config)
-        assert internal_client.state == "initial"
-        assert internal_client._transport is None
-        internal_client.state = "disconnected"
-        internal_client.connect()
-        internal_client.send_event(event)
-
-    TransportConfig.get_specific_transport.assert_called_once_with(authentication_provider)

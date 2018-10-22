@@ -9,16 +9,15 @@ import types
 
 class InternalClient(object):
 
-    def __init__(self, auth_provider, transport_config):
+    def __init__(self, auth_provider, device_transport):
         """
         Constructor for instantiating an internal client
         :param auth_provider: The authentication provider
-        :param transport_config: The transport config
+        :param device_transport: The device transport that the client will use.
         """
         self._auth_provider = auth_provider
-        self._transport_config = transport_config
+        self._transport = device_transport
 
-        self._transport = None
         self.state = "initial"
 
         self.on_connection_state = types.FunctionType
@@ -28,10 +27,8 @@ class InternalClient(object):
         The client must call this method as an entry point to getting connected to IoT Hub
         """
         logging.info("connecting to transport")
-        self._transport = self._transport_config.get_specific_transport(self._auth_provider)
         self._transport.on_transport_connected = self._get_transport_connected_state_callback
         self._transport.connect()
-        self._emit_connection_status()  # dont need this line
 
     def send_event(self, event):
         """
@@ -39,12 +36,7 @@ class InternalClient(object):
         The client must call this method to send messages.
         :param event: The actual message to send.
         """
-        if self.state is "connected": # no need for if else check
-            self._transport.send_event(event)
-        else:
-            logging.error("Can not send if not connected")
-            # Check if need to define custom exception
-            raise ValueError("No connection present to send event.")
+        self._transport.send_event(event)
 
     def _emit_connection_status(self):
         """

@@ -5,7 +5,6 @@
 import os
 import logging
 from azure.iot.hub.devicesdk.module_client import ModuleClient
-from azure.iot.hub.devicesdk.transport.transport_config import TransportProtocol, TransportConfig
 
 logging.basicConfig(level=logging.INFO)
 
@@ -14,8 +13,7 @@ logging.basicConfig(level=logging.INFO)
 conn_str = os.getenv("IOTHUB_MODULE_CONNECTION_STRING")
 logging.info(conn_str)
 
-transport_config = TransportConfig(TransportProtocol.MQTT)
-simpleModule = ModuleClient.create_from_connection_string(conn_str, transport_config)
+simpleModule = ModuleClient.from_connection_string(conn_str, "mqtt")
 
 
 def connection_state_callback(status):
