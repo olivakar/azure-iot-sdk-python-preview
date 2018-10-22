@@ -36,3 +36,15 @@ class MQTTTransport(AbstractTransport):
 
     def _get_connected_state_callback(self, machine_state):
         return self.on_transport_connected(machine_state)
+
+    def _on_sas_token_updated(self):
+      """
+      Handle the case where the authentication provider has recently updated the sas
+      token and the transport needs update its connection in order to use the new
+      token.  In response to this event, the transport will call into the authentication
+      provider to retrieve the new credentials and then the transport will disconnect
+      and reconnect itself in order to use the new credentials.  If the transport is not
+      currently connected, this event will not trigger a connection operation.
+      """
+      pass
+

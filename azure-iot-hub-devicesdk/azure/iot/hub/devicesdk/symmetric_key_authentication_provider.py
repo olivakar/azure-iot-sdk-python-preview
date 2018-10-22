@@ -38,6 +38,7 @@ class SymmetricKeyAuthenticationProvider(object):
         self.shared_access_signature_token = None
         self._shared_access_keyname = None
         self._shared_access_key = None
+        self.on_sas_token_updated = None
 
     @classmethod
     def create_authentication_from_connection_string(cls, connection_string):
@@ -62,6 +63,39 @@ class SymmetricKeyAuthenticationProvider(object):
 
     def get_current_sas_token(self):
         """
-        :return: The current shared access signature token
+        :return: The current shared access signature token.  This returns a cached value
+        and does not cause any token creation or re-creation to take place.  If the client
+        wishes to update the sas token, they should call trigger_sas_token_update.
         """
         return self.shared_access_signature_token
+
+    def _schedule_token_update(self, seconds_until_update):
+      """
+      Schedule an automatic sas token update to take place seconds_until_update seconds in
+      the future.  If an update was previously scheduled, this method shall cancel the
+      previously-scheduled update and schedule a new update.
+      """
+      pass
+
+    def trigger_sas_token_update(self):
+      """
+      Force the SAS token to update itself.  This will cause a new sas token to be
+      created, and self.on_sas_token_updated to be called.  The token update will
+      be rescheduled based on the current time.
+      """
+      pass
+
+    def _notify_token_updated(self):
+      """
+      Notify clients that the SAS token has been updated by calling self.on_sas_token_updated.
+      In response to this event, clients should re-initiate their connection in order to use
+      the updated sas token.
+      """
+      pass
+
+    def _update_sas_token(self):
+      """
+      Generate a new sas token and notify the client that the token has been updated.  
+      """
+      pass
+
