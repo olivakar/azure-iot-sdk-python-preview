@@ -19,6 +19,7 @@ class MQTTTransport(AbstractTransport):
         self.on_transport_connected = types.FunctionType
 
     def connect(self):
+        # Add code here: If the auth provider has a function to get a CA cert, call it and pass the CA cert into the MQTTProvider initializer.
         self._mqtt_provider = MQTTProvider(
             self._auth_provider.device_id,
             self._auth_provider.hostname,

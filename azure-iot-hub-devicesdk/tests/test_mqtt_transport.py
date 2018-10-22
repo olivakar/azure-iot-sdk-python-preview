@@ -91,3 +91,19 @@ def test_disconnect_from_message_broker(mocker, transport):
     transport.disconnect()
 
     mock_mqtt_provider.disconnect.assert_called_once_with()
+
+def test_transport_uses_ca_from_auth_provider_if_available():
+    """
+    Verify that the transport calls get_trusted_certificate_authority
+    on the auth provider (if availalbe) in order to get a CA string and that it
+    passes this string into the transport provider.
+    """
+    pass
+
+def test_transport_doesnt_pass_ca_if_auth_provider_doesnt_provide_it():
+    """
+    If the auth provider does not have a get_trusted_certificate_authority
+    method, then verify that the transport passes None as the CA to the transport
+    provider
+    """
+    pass
