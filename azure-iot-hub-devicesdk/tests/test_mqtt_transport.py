@@ -93,15 +93,15 @@ def test_disconnect_from_message_broker(mocker, transport):
     mock_mqtt_provider.disconnect.assert_called_once_with()
 
 def test_sas_token_updated_causes_transport_reconnection():
-  """
-  Verify that transport disconnects and reconnects the transport
-  when the authentication provider triggers an _on_sas_token_updated event
-  """
-  pass
+    """
+    Verify that transport disconnects and reconnects the transport
+    when the authentication provider triggers an _on_sas_token_updated event
+    """
+    pass
 
 def test_sas_token_updated_does_not_connect_if_transport_was_not_already_connected():
-  """
-  Verify that an updated sas token does not cause the transport to
-  connect itself if it was not previously connected.
-  """
-  pass
+    """
+    Verify that an updated sas token does not cause the transport to
+    connect itself if it was not previously connected.
+    """
+    pass

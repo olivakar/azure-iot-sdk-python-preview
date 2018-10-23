@@ -18,6 +18,12 @@ from azure.iot.common.connection_string import (
 )
 from azure.iot.common.sastoken import SasToken
 
+# Length of time, in seconds, that a SAS token is valid for.
+DEFAULT_TOKEN_RENEWAL_INTERVAL = 3600
+
+# Length of time, in seconds, before a token expires that we want to begin renewing it.
+DEFAULT_TOKEN_RENEWAL_MARGIN = 120
+
 
 class SymmetricKeyAuthenticationProvider(object):
     """
@@ -25,7 +31,7 @@ class SymmetricKeyAuthenticationProvider(object):
     including x509 and SAS based authentication.
     """
 
-    def __init__(self, connection_string):
+    def __init__(self, connection_string, token_renewal_interval = DEFAULT_TOKEN_RENEWAL_INTERVAL, token_renewal_margin = DEFAULT_TOKEN_RENEWAL_MARGIN):
 
         self.hostname = connection_string[HOST_NAME]
         self.device_id = connection_string[DEVICE_ID]
@@ -69,33 +75,40 @@ class SymmetricKeyAuthenticationProvider(object):
         """
         return self.shared_access_signature_token
 
+   def generate_new_sas_token(self):
+        """
+        Force the SAS token to update itself.  This will cause a new sas token to be
+        created, and self.on_sas_token_updated to be called.  The token update will
+        be rescheduled based on the current time.
+        """
+        pass
+
+    def cancel_token_update_timer(self):
+        """
+        Cancel any future token update operations.  This is typically done as part of a
+        teardown operation
+        """
+        pass
+
     def _schedule_token_update(self, seconds_until_update):
-      """
-      Schedule an automatic sas token update to take place seconds_until_update seconds in
-      the future.  If an update was previously scheduled, this method shall cancel the
-      previously-scheduled update and schedule a new update.
-      """
-      pass
+        """
+        Schedule an automatic sas token update to take place seconds_until_update seconds in
+        the future.  If an update was previously scheduled, this method shall cancel the
+        previously-scheduled update and schedule a new update.
+        """
+        pass
 
-    def trigger_sas_token_update(self):
-      """
-      Force the SAS token to update itself.  This will cause a new sas token to be
-      created, and self.on_sas_token_updated to be called.  The token update will
-      be rescheduled based on the current time.
-      """
-      pass
-
-    def _notify_token_updated(self):
-      """
-      Notify clients that the SAS token has been updated by calling self.on_sas_token_updated.
-      In response to this event, clients should re-initiate their connection in order to use
-      the updated sas token.
-      """
-      pass
+     def _notify_token_updated(self):
+        """
+        Notify clients that the SAS token has been updated by calling self.on_sas_token_updated.
+        In response to this event, clients should re-initiate their connection in order to use
+        the updated sas token.
+        """
+        pass
 
     def _update_sas_token(self):
-      """
-      Generate a new sas token and notify the client that the token has been updated.  
-      """
-      pass
+        """
+        Generate a new sas token and notify the client that the token has been updated.
+        """
+        pass
 

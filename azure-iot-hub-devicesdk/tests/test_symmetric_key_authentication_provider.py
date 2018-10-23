@@ -118,30 +118,31 @@ def test_sastoken_keyname(mocker):
     mock_sastoken.assert_called_once_with(uri, shared_access_key, shared_access_key_name)
 
 def test_scheduled_sas_token_update_happens_and_calls_event_handler():
-  """
-  Verifies that the sas token update happens at the appropriate time
-  and calls the on_sas_token_updated handler.  Also, verify that
-  the provider has actually generated a new token.
-  """
-  pass
+    """
+    Verifies that the sas token update happens at the appropriate time
+    and calls the on_sas_token_updated handler.  Also, verify that
+    the provider has actually generated a new token.
+    """
+    pass
 
 def test_scheduled_sas_token_update_reschedules_update():
-  """
-  Verifies that a scheduled token update operation has the side-effect of
-  rescheduling the token update.
-  """
+    """
+    Verifies that a scheduled token update operation has the side-effect of
+    rescheduling the token update.
+    """
+    pass
 
 def test_trigger_sas_token_update_creates_new_token_and_calls_event_handler():
-  """
-  Verifies that trigger_sas_token_update creates a new token and calls the
-  on_sas_token_update_handler.  Also, verify that the provider has actually generated
-  a new token.
-  """
-  pass
+    """
+    Verifies that trigger_sas_token_update creates a new token and calls the
+    on_sas_token_update_handler.  Also, verify that the provider has actually generated
+    a new token.
+    """
+    pass
 
 def test_sas_token_update_reschedules_update():
-  """
-  Verifies that a manually triggerd token update operation has the side-effect of
-  rescheduling the token update.
-  """
-  pass
+    """
+    Verifies that a manually triggerd token update operation has the side-effect of
+    rescheduling the token update.
+    """
+    pass
