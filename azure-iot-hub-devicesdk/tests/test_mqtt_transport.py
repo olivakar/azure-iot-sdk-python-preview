@@ -107,3 +107,17 @@ def test_transport_doesnt_pass_ca_if_auth_provider_doesnt_provide_it():
     provider
     """
     pass
+
+def test_transport_fails_connection_if_auth_provider_fails_getting_ca_certificate():
+    """
+    verify that the transport connection fails if the auth provider raises an exception
+    while getting the trust bundle.
+    """
+    pass
+
+def test_transport_fails_connection_if_auth_provider_does_not_provide_sas_token():
+    """
+    verify that the transport will fail to connect if the auth provider does not supply
+    a sas token for the transport to use.
+    """
+    pass
