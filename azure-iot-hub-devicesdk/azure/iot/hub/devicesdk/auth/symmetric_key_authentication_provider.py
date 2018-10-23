@@ -51,13 +51,7 @@ class SymmetricKeyAuthenticationProvider(AuthenticationProvider):
         else:
             uri = self.hostname + "/devices/" + self.device_id
 
-        sas_token = None
-        if self.shared_access_keyname is not None:
-            sas_token = SasToken.create(uri, self.shared_access_key, self.shared_access_keyname)
-        elif self.shared_access_key is not None:
-            sas_token = SasToken.create(uri, self.shared_access_key)
-        else:
-            pass
+        sas_token = SasToken.create(uri, self.shared_access_key, self.shared_access_keyname)
         self.shared_access_signature_token = str(sas_token)
 
     def get_current_sas_token(self):

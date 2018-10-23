@@ -7,6 +7,10 @@ import base64
 import hmac
 import hashlib
 import time
+"""
+The urllib, urllib2, and urlparse modules from Python 2 have been combined in the urllib package in Python 3
+The six.moves.urllib package is a python version-independent location of the above functionality.
+"""
 import six.moves.urllib as urllib
 
 __all__ = ["SasToken", "SasTokenError"]
@@ -17,7 +21,6 @@ PARTS_SEPARATOR = " "
 
 
 SIGNATURE = "sig"
-SHARED_ACCESS_KEY = "sk"
 SHARED_ACCESS_KEY_NAME = "skn"
 RESOURCE_URI = "sr"
 EXPIRY = "se"
@@ -25,7 +28,6 @@ EXPIRY = "se"
 
 _valid_keys = [
     SIGNATURE,
-    SHARED_ACCESS_KEY,
     SHARED_ACCESS_KEY_NAME,
     RESOURCE_URI,
     EXPIRY
@@ -106,10 +108,12 @@ class SasToken(object):
         sas_token.refresh()
         return sas_token
 
+
+
     @staticmethod
-    def parse(shared_access_signature):
+    def parse_from_string(shared_access_signature):
         """
-        This method creates a shared access signature object from a string, and sets properties for each of the parsed
+        This method creates a SharedAccessSignature token object from a string, and sets properties for each of the parsed
         fields in the string. Also validates the required properties of the shared access signature.
         :param shared_access_signature: The ampersand-delimited string of 'name=value' pairs.
         The input may look like the following formations:-
@@ -126,7 +130,7 @@ class SasToken(object):
         if len(sas_args) != len(d):
             raise ValueError("Invalid Shared Access Signature - Unable to parse")
         if not all(key in _valid_keys for key in d.keys()):
-            raise ValueError("Invalid Shared Access Signature - Invalid Key")
+            raise ValueError("Invalid keys in shared access signature. The valid keys are sr, sig, se and an optional skn.")
 
         _validate_required_keys(d)
 

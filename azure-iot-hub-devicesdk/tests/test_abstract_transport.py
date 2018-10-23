@@ -7,7 +7,7 @@ import pytest
 from azure.iot.hub.devicesdk.transport.abstract_transport import AbstractTransport
 
 
-def test_raises_exception_abstract_transport():
+def test_raises_exception_on_init_of_abstract_transport():
     with pytest.raises(TypeError) as error:
         AbstractTransport()
     msg = str(error.value)
