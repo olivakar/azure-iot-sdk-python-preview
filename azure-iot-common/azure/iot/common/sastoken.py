@@ -11,8 +11,9 @@ import six.moves.urllib as urllib
 
 __all__ = ["SasToken", "SasTokenError"]
 
-CS_DELIMITER = "&"
-CS_VAL_SEPARATOR = "="
+DELIMITER = "&"
+VALUE_SEPARATOR = "="
+PARTS_SEPARATOR = " "
 
 
 SIGNATURE = "sig"
@@ -46,13 +47,6 @@ class SasToken(object):
     _encoding_type = "utf-8"
     _service_token_format = "SharedAccessSignature sr={}&sig={}&se={}&skn={}"
     _device_token_format = "SharedAccessSignature sr={}&sig={}&se={}"
-
-    # def __init__(self, uri, key, key_name=None, ttl=3600):
-    #     self._uri = urllib.parse.quote_plus(uri)
-    #     self._key = key
-    #     self._key_name = key_name
-    #     self.ttl = ttl
-    #     self.refresh()
 
     def __repr__(self):
         return self._token
@@ -113,7 +107,7 @@ class SasToken(object):
         return sas_token
 
     @staticmethod
-    def parse_shared_access_signature(shared_access_signature):
+    def parse(shared_access_signature):
         """
         This method creates a shared access signature object from a string, and sets properties for each of the parsed
         fields in the string. Also validates the required properties of the shared access signature.
@@ -123,16 +117,16 @@ class SasToken(object):
         SharedAccessSignature sr=<resource_uri>&sig=<signature>&skn=<keyname>&se=<expiry>
         :return: The shared access signature object constructed from the input string
         """
-        parts = shared_access_signature.split(" ")
+        parts = shared_access_signature.split(PARTS_SEPARATOR)
         if len(parts) != 2:
-            raise ValueError("Malformed shared access signature")
+            raise ValueError("The shared access signature must be of the format 'SharedAccessSignature sr=<resource_uri>&sig=<signature>&se=<expiry>' or/and it can additionally contain an optional skn=<keyname> name=value pair.")
 
-        sas_args = parts[1].split(CS_DELIMITER)
-        d = dict(arg.split(CS_VAL_SEPARATOR, 1) for arg in sas_args)
+        sas_args = parts[1].split(DELIMITER)
+        d = dict(arg.split(VALUE_SEPARATOR, 1) for arg in sas_args)
         if len(sas_args) != len(d):
             raise ValueError("Invalid Shared Access Signature - Unable to parse")
         if not all(key in _valid_keys for key in d.keys()):
-            raise ValueError("Invalid hared Access Signature - Invalid Key")
+            raise ValueError("Invalid Shared Access Signature - Invalid Key")
 
         _validate_required_keys(d)
 

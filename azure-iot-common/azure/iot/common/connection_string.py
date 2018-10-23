@@ -84,4 +84,3 @@ class ConnectionString(object):
             return self._dict[key]
         except KeyError:
             return default
-
