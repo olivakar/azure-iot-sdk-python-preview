@@ -9,14 +9,14 @@ import types
 
 class InternalClient(object):
 
-    def __init__(self, auth_provider, device_transport):
+    def __init__(self, auth_provider, transport):
         """
         Constructor for instantiating an internal client
         :param auth_provider: The authentication provider
-        :param device_transport: The device transport that the client will use.
+        :param transport: The device transport that the client will use.
         """
         self._auth_provider = auth_provider
-        self._transport = device_transport
+        self._transport = transport
 
         self.state = "initial"
 

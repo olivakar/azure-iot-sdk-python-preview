@@ -21,7 +21,7 @@ password = "Fortuna Major"
 username = hostname + "/" + device_id
 
 
-def test_create():
+def test_initiation_creates_provider_with_proper_statemachine_and_attributes():
     provider = MQTTProvider(device_id, hostname, username, password)
     assert provider._client_id == device_id
     assert provider._hostname == hostname
@@ -46,7 +46,7 @@ def test_create():
     assert provider._state_machine.on_enter_disconnected is not None
 
 
-def test_on_enter_connecting(mocker):
+def test_on_enter_connecting_calls_emit_status_and_creates_mqttclient_and_calls_methods_assigns_callback(mocker):
     mock_mqtt_client = MagicMock(spec=mqtt.Client)
     mock_constructor_mqtt_client = mocker.patch(
         "azure.iot.hub.devicesdk.transport.mqtt.mqtt_provider.mqtt.Client"
@@ -82,7 +82,7 @@ def test_on_enter_connecting(mocker):
     assert mock_mqtt_client.on_publish is not None
 
 
-def test_on_enter_disconnecting(mocker):
+def test_on_enter_disconnecting_calls_emit_status(mocker):
     mocker.patch.object(MQTTProvider, "_emit_connection_status")
 
     mqtt_provider = MQTTProvider(device_id, hostname, username, password)
@@ -91,7 +91,7 @@ def test_on_enter_disconnecting(mocker):
     MQTTProvider._emit_connection_status.assert_called_once_with()
 
 
-def test_connect(mocker):
+def test_connect_calls_triggers_statemachine_connect(mocker):
     mock_machine_from_real = create_from_real_state_machine()
     mock_machine_constructor = mocker.patch(
         "azure.iot.hub.devicesdk.transport.mqtt.mqtt_provider.Machine"
@@ -104,7 +104,7 @@ def test_connect(mocker):
     mock_machine_from_real.trig_connect.assert_called_once_with()
 
 
-def test_disconnect(mocker):
+def test_disconnect_calls_loopstop_on_mqttclient(mocker):
     mock_mqtt_client = MagicMock(spec=mqtt.Client)
     mock_constructor_mqtt_client = mocker.patch(
         "azure.iot.hub.devicesdk.transport.mqtt.mqtt_provider.mqtt.Client"
@@ -119,7 +119,7 @@ def test_disconnect(mocker):
     mock_mqtt_client.loop_stop.assert_called_once_with()
 
 
-def test_publish(mocker):
+def test_publish_calls_publish_on_mqtt_client(mocker):
     topic = "topic/"
     event = "Tarantallegra"
 
@@ -137,7 +137,7 @@ def test_publish(mocker):
     mock_mqtt_client.publish.assert_called_once_with(topic=topic, payload=event, qos=1)
 
 
-def test_emit_connection_status(mocker):
+def test_emit_connection_status_calls_handler_of_mqtt_connected(mocker):
     stub_on_connection_state = mocker.stub(name="on_mqtt_connected")
 
     mock_machine_from_real = create_from_real_state_machine()

@@ -28,18 +28,16 @@ def authentication_provider(connection_string):
     return auth_provider
 
 
-def test_connect(authentication_provider):
+def test_internal_client_connect_in_turn_calls_transport_connect(authentication_provider):
     mock_transport = MagicMock(spec=MQTTTransport)
-
     device_client = InternalClient(authentication_provider, mock_transport)
-    assert device_client.state == "initial"
 
     device_client.connect()
 
     mock_transport.connect.assert_called_once_with()
 
 
-def test_get_transport_state(mocker, authentication_provider):
+def test_internal_client_get_transport_state_callback_calls_on_connection_state_handler(mocker, authentication_provider):
     stub_on_connection_state = mocker.stub(name="on_connection_state")
 
     mock_transport = MQTTTransport(authentication_provider)
@@ -52,7 +50,7 @@ def test_get_transport_state(mocker, authentication_provider):
     stub_on_connection_state.assert_called_once_with(new_state)
 
 
-def test_emit_connection_status(mocker, authentication_provider):
+def test_internal_emit_connection_status_calls_on_connection_state_handler(mocker, authentication_provider):
     stub_on_connection_state = mocker.stub(name="on_connection_state")
 
     mock_transport = MQTTTransport(authentication_provider)
@@ -66,12 +64,11 @@ def test_emit_connection_status(mocker, authentication_provider):
     stub_on_connection_state.assert_called_once_with(new_state)
 
 
-def test_send_event_magic_mock(authentication_provider):
+def test_internal_client_send_event_in_turn_calls_transport_send_event(authentication_provider):
     mock_transport = MagicMock(spec=MQTTTransport)
 
     event = "Caput Draconis"
     device_client = InternalClient(authentication_provider, mock_transport)
-    assert device_client.state == "initial"
     device_client.state = "connected"
     device_client.connect()
     device_client.send_event(event)

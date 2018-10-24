@@ -46,10 +46,9 @@ class SymmetricKeyAuthenticationProvider(AuthenticationProvider):
             self.shared_access_keyname = parsed_connection_string[SHARED_ACCESS_KEY_NAME]
 
     def _sign(self):
+        uri = self.hostname + "/devices/" + self.device_id
         if self.module_id:
-            uri = self.hostname + "/devices/" + self.device_id + "/modules/" + self.module_id
-        else:
-            uri = self.hostname + "/devices/" + self.device_id
+            uri += "/modules/" + self.module_id
 
         sas_token = SasToken.create(uri, self.shared_access_key, self.shared_access_keyname)
         self.shared_access_signature_token = str(sas_token)

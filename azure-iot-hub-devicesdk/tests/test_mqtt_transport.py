@@ -33,7 +33,7 @@ def transport(authentication_provider):
     return transport
 
 
-def test_create():
+def test_instantiation_creates_proper_transport():
     connection_string = connection_string_format.format(hostname, device_id, shared_access_key)
     authentication_provider = from_connection_string(connection_string)
     trans = MQTTTransport(authentication_provider)
@@ -41,7 +41,7 @@ def test_create():
     assert trans._mqtt_provider is None
 
 
-def test_connect_to_message_broker(mocker, transport):
+def test_connect_in_turn_calls_connect_on_provider(mocker, transport):
     mock_mqtt_provider = MagicMock(spec=MQTTProvider)
     mock_mqtt_provider_constructor = mocker.patch(
         "azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport.MQTTProvider"
@@ -54,7 +54,7 @@ def test_connect_to_message_broker(mocker, transport):
     mock_mqtt_provider.connect.assert_called_once_with()
 
 
-def test_sendevent(mocker, transport):
+def test_sendevent_in_turn_calls_publish_on_provider(mocker, transport):
     topic = "devices/" + device_id + "/messages/events/"
     event = "Wingardian Leviosa"
 
@@ -73,7 +73,7 @@ def test_sendevent(mocker, transport):
     mock_mqtt_provider.publish.assert_called_once_with(topic, event)
 
 
-def test_disconnect_from_message_broker(mocker, transport):
+def test_disconnect_in_turn_calls_disconnect_on_provider(mocker, transport):
     mock_mqtt_provider = MagicMock(spec=MQTTProvider)
     mock_mqtt_provider_constructor = mocker.patch(
         "azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport.MQTTProvider"

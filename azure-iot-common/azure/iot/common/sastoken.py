@@ -153,8 +153,7 @@ def _validate_required_keys(d):
     signature = d.get(SIGNATURE)
     expiry = d.get(EXPIRY)
 
-    # This logic could be expanded to return the category of ConnectionString
     if resource_uri and signature and expiry:
         pass
     else:
-        raise ValueError("Invalid Shared Access Signature - Missing some property")
+        raise ValueError("Invalid Shared Access Signature as missing some key.It must contain the keys sr, sig and se.")
