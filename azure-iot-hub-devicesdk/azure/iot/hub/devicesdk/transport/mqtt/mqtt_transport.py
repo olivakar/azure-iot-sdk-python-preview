@@ -20,15 +20,20 @@ class MQTTTransport(AbstractTransport):
 
     def connect(self):
         self._mqtt_provider = MQTTProvider(
-            self._auth_provider.device_id,
-            self._auth_provider.hostname,
+            self._auth_provider.device_id + "/" +
+            self._auth_provider.module_id,
+            self._auth_provider.gateway_hostname,
+            self._auth_provider.hostname + "/" + 
+            self._auth_provider.device_id + "/" +
+            self._auth_provider.module_id + "/" + "?api-version=2018-06-30",
             str(self._auth_provider.get_current_sas_token()),
+            self._auth_provider.trusted_ca 
         )
         self._mqtt_provider.on_mqtt_connected = self._get_connected_state_callback
         self._mqtt_provider.connect()
 
     def send_event(self, event):
-        topic = "devices/" + self._auth_provider.device_id + "/messages/events/"
+        topic = "devices/" + self._auth_provider.device_id + "/modules/" + self._auth_provider.module_id + "/messages/events/"
         self._mqtt_provider.publish(topic, event)
 
     def disconnect(self):

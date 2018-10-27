@@ -5,13 +5,14 @@
 import os
 import logging
 from azure.iot.hub.devicesdk.device_client import DeviceClient
+from azure.iot.hub.devicesdk.iotedge_authentication_provider import IotEdgeAuthenticationProvider
 from azure.iot.hub.devicesdk.transport.transport_config import TransportProtocol, TransportConfig
 
 logging.basicConfig(level=logging.INFO)
 
-conn_str = os.getenv("IOTHUB_DEVICE_CONNECTION_STRING")
 transport_config = TransportConfig(TransportProtocol.MQTT)
-simpleDevice = DeviceClient.create_from_connection_string(conn_str, transport_config)
+auth = IotEdgeAuthenticationProvider.create_from_environment()
+simpleDevice = DeviceClient.create(auth, transport_config)
 
 
 def connection_state_callback(status):

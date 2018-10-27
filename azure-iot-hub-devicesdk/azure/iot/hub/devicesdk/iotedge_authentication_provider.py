@@ -6,6 +6,8 @@
 import os
 import sys
 import time
+import math
+import six.moves.urllib as urllib
 from .iotedge_hsm import IotEdgeHsm
 
 
@@ -34,10 +36,16 @@ class IotEdgeAuthenticationProvider(object):
 
     def _renew_shared_access_signature(self):
         # TODO: URI encode
-        resource_uri = (
-            self.hostname + "/devices/" + self.device_id + "/modules/" + self.module_id
+        resource_uri = urllib.parse.quote(
+            self.hostname + "/devices/" + self.device_id + "/modules/" + self.module_id, safe=""
         )
-        expiry = math.floor(time.time) + self.sas_ttl
-        string_to_sign = resource_uri + "\n" + expiry
-        sig = hsm.sign(string_to_sign)
-        self.shared_access_signature = _token_format.format(resource_uri, sig, expiry)
+        expiry = math.floor(time.time()) + self.sas_ttl
+        string_to_sign = resource_uri + "\n" + str(expiry)
+        sig = self.hsm.sign(string_to_sign)
+        self.shared_access_signature_token = IotEdgeAuthenticationProvider._token_format.format(resource_uri, urllib.parse.quote(sig), expiry)
+
+    def get_current_sas_token(self):
+        """
+        :return: The current shared access signature token
+        """
+        return self.shared_access_signature_token

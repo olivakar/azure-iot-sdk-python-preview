@@ -69,3 +69,10 @@ class DeviceClient(object):
             ),
             transport_config,
         )
+
+    @staticmethod
+    def create(auth, transport_config):
+        return DeviceClient(
+            auth,
+            transport_config,
+        )

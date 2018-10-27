@@ -17,7 +17,7 @@ class MQTTProvider(object):
     to publish/subscribe messages.
     """
 
-    def __init__(self, device_id, hostname, password):
+    def __init__(self, device_id, hostname, username, password, ca_cert = None):
         """
         Constructor to instantiate a mqtt provider.
         :param device_id: The id of the device representing the client when connecting to the broker.
@@ -40,9 +40,10 @@ class MQTTProvider(object):
         self._state_machine.on_enter_connected(self._emit_connection_status)
         self._state_machine.on_enter_disconnected(self._emit_connection_status)
 
+        self._ca_cert = ca_cert
         self._device_id = device_id
         self._hostname = hostname
-        self._username = hostname + "/" + device_id
+        self._username = username
         self._password = password
         self._mqtt_client = None
 
@@ -72,17 +73,14 @@ class MQTTProvider(object):
         self._mqtt_client.on_publish = on_publish_callback
         logging.info("Created MQTT provider, assigned callbacks")
 
-        self._mqtt_client.tls_set(
-            ca_certs=os.environ.get("IOTHUB_ROOT_CA_CERT"),
-            certfile=None,
-            keyfile=None,
-            cert_reqs=ssl.CERT_REQUIRED,
-            tls_version=ssl.PROTOCOL_TLSv1,
-            ciphers=None,
-        )
+        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+        ssl_context.load_verify_locations(cadata = self._ca_cert)
+        ssl_context.verify_mode = ssl.CERT_REQUIRED
+        self._mqtt_client.tls_set_context(ssl_context)
         self._mqtt_client.tls_insecure_set(False)
 
         self._mqtt_client.username_pw_set(username=self._username, password=self._password)
+        print("u={}, p={}".format(self._username, self._password))
 
         self._mqtt_client.connect(host=self._hostname, port=8883)
         self._mqtt_client.loop_start()
