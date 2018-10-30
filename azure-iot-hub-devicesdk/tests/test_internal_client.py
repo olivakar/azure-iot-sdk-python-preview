@@ -51,10 +51,10 @@ def test_internal_client_get_transport_state_callback_calls_on_connection_state_
     client = InternalClient(authentication_provider, mock_transport)
     client.on_connection_state = stub_on_connection_state
 
-    new_state = "noiseless_blackness"
-    client._handle_transport_connected_state(new_state)
+    fake_new_state = "noiseless_blackness"
+    client._handle_transport_connected_state(fake_new_state)
 
-    stub_on_connection_state.assert_called_once_with(new_state)
+    stub_on_connection_state.assert_called_once_with(fake_new_state)
 
 
 def test_internal_client_emit_connection_status_calls_on_connection_state_handler(mocker, authentication_provider):
@@ -63,12 +63,12 @@ def test_internal_client_emit_connection_status_calls_on_connection_state_handle
     mock_transport = MQTTTransport(authentication_provider)
     client = InternalClient(authentication_provider, mock_transport)
     client.on_connection_state = stub_on_connection_state
-    new_state = "noiseless_blackness"
-    client.state = new_state
+    fake_new_state = "noiseless_blackness"
+    client.state = fake_new_state
 
     client._emit_connection_status()
 
-    stub_on_connection_state.assert_called_once_with(new_state)
+    stub_on_connection_state.assert_called_once_with(fake_new_state)
 
 
 def test_internal_client_send_event_in_turn_calls_transport_send_event(authentication_provider):

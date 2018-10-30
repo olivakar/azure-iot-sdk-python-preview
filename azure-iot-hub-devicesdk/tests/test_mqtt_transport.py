@@ -15,14 +15,14 @@ from mock import MagicMock
 
 
 connection_string_format = "HostName={};DeviceId={};SharedAccessKey={}"
-shared_access_key = "Zm9vYmFy"
-hostname = "beauxbatons.academy-net"
-device_id = "MyPensieve"
+fake_shared_access_key = "Zm9vYmFy"
+fake_hostname = "beauxbatons.academy-net"
+fake_device_id = "MyPensieve"
 
 
 @pytest.fixture(scope="module")
 def authentication_provider():
-    connection_string = connection_string_format.format(hostname, device_id, shared_access_key)
+    connection_string = connection_string_format.format(fake_hostname, fake_device_id, fake_shared_access_key)
     auth_provider = from_connection_string(connection_string)
     return auth_provider
 
@@ -34,7 +34,7 @@ def transport(authentication_provider):
 
 
 def test_instantiation_creates_proper_transport():
-    connection_string = connection_string_format.format(hostname, device_id, shared_access_key)
+    connection_string = connection_string_format.format(fake_hostname, fake_device_id, fake_shared_access_key)
     authentication_provider = from_connection_string(connection_string)
     trans = MQTTTransport(authentication_provider)
     assert trans._auth_provider == authentication_provider
@@ -55,7 +55,7 @@ def test_connect_in_turn_calls_connect_on_provider(mocker, transport):
 
 
 def test_sendevent_in_turn_calls_publish_on_provider(mocker, transport):
-    topic = "devices/" + device_id + "/messages/events/"
+    topic = "devices/" + fake_device_id + "/messages/events/"
     event = "Wingardian Leviosa"
 
     mock_mqtt_provider = MagicMock(spec=MQTTProvider)
