@@ -14,17 +14,17 @@ logging.basicConfig(level=logging.INFO)
 conn_str = os.getenv("IOTHUB_MODULE_CONNECTION_STRING")
 logging.info(conn_str)
 auth_provider = from_connection_string(conn_str)
-simpleModule = ModuleClient.from_authentication_provider(auth_provider, "mqtt")
+simple_module = ModuleClient.from_authentication_provider(auth_provider, "mqtt")
 
 
 def connection_state_callback(status):
     print("connection status: " + status)
     if status == "connected":
-        simpleModule.send_event("Aguamenti")
+        simple_module.send_event("payload from module")
 
 
-simpleModule.on_connection_state = connection_state_callback
-simpleModule.connect()
+simple_module.on_connection_state = connection_state_callback
+simple_module.connect()
 
 while True:
     continue

@@ -18,7 +18,7 @@ simpleDevice = DeviceClient.from_authentication_provider(auth_provider, "mqtt")
 def connection_state_callback(status):
     print("connection status: " + status)
     if status == "connected":
-        simpleDevice.send_event("Caput Draconis")
+        simpleDevice.send_event("payload from device authenticated with sas")
 
 
 simpleDevice.on_connection_state = connection_state_callback

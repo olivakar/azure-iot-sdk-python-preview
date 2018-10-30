@@ -11,17 +11,17 @@ logging.basicConfig(level=logging.INFO)
 
 conn_str = os.getenv("IOTHUB_DEVICE_CONNECTION_STRING")
 auth_provider = from_connection_string(conn_str)
-simpleDevice = DeviceClient.from_authentication_provider(auth_provider, "mqtt")
+simple_device = DeviceClient.from_authentication_provider(auth_provider, "mqtt")
 
 
 def connection_state_callback(status):
     print("connection status: " + status)
     if status == "connected":
-        simpleDevice.send_event("Mimbulus Mimbletonia")
+        simple_device.send_event("payload from device")
 
 
-simpleDevice.on_connection_state = connection_state_callback
-simpleDevice.connect()
+simple_device.on_connection_state = connection_state_callback
+simple_device.connect()
 
 while True:
     continue
