@@ -3,7 +3,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from azure.iot.hub.devicesdk.device_client import DeviceClient
+from azure.iot.hub.devicesdk.module_client import ModuleClient
 from azure.iot.hub.devicesdk.auth.authentication_provider_factory import from_connection_string
 from azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport import MQTTTransport
 import pytest
@@ -33,11 +33,11 @@ def authentication_provider(connection_string):
     return auth_provider
 
 
-def test_device_client_gets_created_correctly(mocker, authentication_provider):
+def test_module_client_gets_created_correctly(mocker, authentication_provider):
     mock_transport = MagicMock(spec=MQTTTransport)
-    mock_constructor_transport = mocker.patch("azure.iot.hub.devicesdk.device_client.MQTTTransport")
+    mock_constructor_transport = mocker.patch("azure.iot.hub.devicesdk.module_client.MQTTTransport")
     mock_constructor_transport.return_value = mock_transport
-    device_client = DeviceClient.from_authentication_provider(authentication_provider, "mqtt")
+    device_client = ModuleClient.from_authentication_provider(authentication_provider, "mqtt")
 
     assert device_client._auth_provider == authentication_provider
     assert device_client._transport == mock_transport

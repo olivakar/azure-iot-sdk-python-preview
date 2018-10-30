@@ -13,7 +13,7 @@ class InternalClient(object):
         """
         Constructor for instantiating an internal client
         :param auth_provider: The authentication provider
-        :param transport: The device transport that the client will use.
+        :param transport: The transport that the client will use.
         """
         self._auth_provider = auth_provider
         self._transport = transport

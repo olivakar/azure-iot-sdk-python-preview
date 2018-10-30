@@ -1,3 +1,8 @@
+# --------------------------------------------------------------------------------------------
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License. See License.txt in the project root for license information.
+# --------------------------------------------------------------------------------------------
+
 from azure.iot.hub.devicesdk.internal_client import InternalClient
 from azure.iot.hub.devicesdk.auth.authentication_provider_factory import from_connection_string
 from azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport import MQTTTransport
@@ -30,9 +35,9 @@ def authentication_provider(connection_string):
 
 def test_internal_client_connect_in_turn_calls_transport_connect(authentication_provider):
     mock_transport = MagicMock(spec=MQTTTransport)
-    device_client = InternalClient(authentication_provider, mock_transport)
+    client = InternalClient(authentication_provider, mock_transport)
 
-    device_client.connect()
+    client.connect()
 
     mock_transport.connect.assert_called_once_with()
 
@@ -41,25 +46,25 @@ def test_internal_client_get_transport_state_callback_calls_on_connection_state_
     stub_on_connection_state = mocker.stub(name="on_connection_state")
 
     mock_transport = MQTTTransport(authentication_provider)
-    device_client = InternalClient(authentication_provider, mock_transport)
-    device_client.on_connection_state = stub_on_connection_state
+    client = InternalClient(authentication_provider, mock_transport)
+    client.on_connection_state = stub_on_connection_state
 
     new_state = "apparating"
-    device_client._get_transport_connected_state_callback(new_state)
+    client._get_transport_connected_state_callback(new_state)
 
     stub_on_connection_state.assert_called_once_with(new_state)
 
 
-def test_internal_emit_connection_status_calls_on_connection_state_handler(mocker, authentication_provider):
+def test_internal_client_emit_connection_status_calls_on_connection_state_handler(mocker, authentication_provider):
     stub_on_connection_state = mocker.stub(name="on_connection_state")
 
     mock_transport = MQTTTransport(authentication_provider)
-    device_client = InternalClient(authentication_provider, mock_transport)
-    device_client.on_connection_state = stub_on_connection_state
+    client = InternalClient(authentication_provider, mock_transport)
+    client.on_connection_state = stub_on_connection_state
     new_state = "apparating"
-    device_client.state = new_state
+    client.state = new_state
 
-    device_client._emit_connection_status()
+    client._emit_connection_status()
 
     stub_on_connection_state.assert_called_once_with(new_state)
 
@@ -67,10 +72,24 @@ def test_internal_emit_connection_status_calls_on_connection_state_handler(mocke
 def test_internal_client_send_event_in_turn_calls_transport_send_event(authentication_provider):
     mock_transport = MagicMock(spec=MQTTTransport)
 
+    event = "Levicorpus"
+    client = InternalClient(authentication_provider, mock_transport)
+    client.state = "connected"
+    client.connect()
+    client.send_event(event)
+
+    mock_transport.send_event.assert_called_once_with(event)
+
+
+def test_transport_any_error_surfaces_to_internal_client(authentication_provider):
+    mock_transport = MagicMock(spec=MQTTTransport)
+    mock_transport.send_event.side_effect = RuntimeError("Some runtime error happened")
+
     event = "Caput Draconis"
-    device_client = InternalClient(authentication_provider, mock_transport)
-    device_client.state = "connected"
-    device_client.connect()
-    device_client.send_event(event)
+    client = InternalClient(authentication_provider, mock_transport)
+    client.state = "connected"
+    client.connect()
+    with pytest.raises(RuntimeError, match="Some runtime error happened"):
+        client.send_event(event)
 
     mock_transport.send_event.assert_called_once_with(event)

@@ -5,6 +5,7 @@
 import os
 import logging
 from azure.iot.hub.devicesdk.module_client import ModuleClient
+from azure.iot.hub.devicesdk.auth.authentication_provider_factory import from_connection_string
 
 logging.basicConfig(level=logging.INFO)
 
@@ -12,9 +13,8 @@ logging.basicConfig(level=logging.INFO)
 # HostName=<SomeHostName>;DeviceId=<SomeDeviceId>;ModuleId=<SomeModuleIdOnSomeDevice>;SharedAccessKey=<SomeSharedAccessKey>
 conn_str = os.getenv("IOTHUB_MODULE_CONNECTION_STRING")
 logging.info(conn_str)
-
-simpleModule = ModuleClient.from_connection_string(conn_str, "mqtt")
-
+auth_provider = from_connection_string(conn_str)
+simpleModule = ModuleClient.from_authentication_provider(auth_provider, "mqtt")
 
 def connection_state_callback(status):
     print("connection status: " + status)
