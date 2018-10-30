@@ -16,6 +16,7 @@ logging.info(conn_str)
 auth_provider = from_connection_string(conn_str)
 simpleModule = ModuleClient.from_authentication_provider(auth_provider, "mqtt")
 
+
 def connection_state_callback(status):
     print("connection status: " + status)
     if status == "connected":

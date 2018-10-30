@@ -77,11 +77,9 @@ class MQTTProvider(object):
             certfile=None,
             keyfile=None,
             cert_reqs=ssl.CERT_REQUIRED,
-            tls_version=ssl.PROTOCOL_TLSv1,
+            tls_version=ssl.PROTOCOL_TLSv1_2,
             ciphers=None,
         )
-        self._mqtt_client.tls_insecure_set(False)
-
         self._mqtt_client.username_pw_set(username=self._username, password=self._password)
 
         self._mqtt_client.connect(host=self._hostname, port=8883)

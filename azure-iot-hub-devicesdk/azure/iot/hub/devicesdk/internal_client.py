@@ -5,6 +5,7 @@
 
 import logging
 import types
+from .transport.mqtt.mqtt_transport import MQTTTransport
 
 
 class InternalClient(object):
@@ -29,7 +30,7 @@ class InternalClient(object):
         The client must call this method as an entry point to getting connected to IoT Hub
         """
         logging.info("connecting to transport")
-        self._transport.on_transport_connected = self._get_transport_connected_state_callback
+        self._transport.on_transport_connected = self._handle_transport_connected_state
         self._transport.connect()
 
     def send_event(self, event):
@@ -50,6 +51,15 @@ class InternalClient(object):
         else:
             logging.error("No callback defined for sending state")
 
-    def _get_transport_connected_state_callback(self, new_state):
+    def _handle_transport_connected_state(self, new_state):
         self.state = new_state
         self._emit_connection_status()
+
+    @classmethod
+    def from_authentication_provider(cls, authentication_provider, transport_name):
+        """Creates a device client with the specified authentication provider and transport protocol"""
+        if transport_name == "mqtt":
+            transport = MQTTTransport(authentication_provider)
+        else:
+            raise NotImplementedError("No specific transport can be instantiated based on the choice.")
+        return InternalClient(authentication_provider, transport)

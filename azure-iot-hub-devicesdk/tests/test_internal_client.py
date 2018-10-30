@@ -4,6 +4,8 @@
 # --------------------------------------------------------------------------------------------
 
 from azure.iot.hub.devicesdk.internal_client import InternalClient
+from azure.iot.hub.devicesdk.device_client import DeviceClient
+from azure.iot.hub.devicesdk.module_client import ModuleClient
 from azure.iot.hub.devicesdk.auth.authentication_provider_factory import from_connection_string
 from azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport import MQTTTransport
 import pytest
@@ -49,8 +51,8 @@ def test_internal_client_get_transport_state_callback_calls_on_connection_state_
     client = InternalClient(authentication_provider, mock_transport)
     client.on_connection_state = stub_on_connection_state
 
-    new_state = "apparating"
-    client._get_transport_connected_state_callback(new_state)
+    new_state = "noiseless_blackness"
+    client._handle_transport_connected_state(new_state)
 
     stub_on_connection_state.assert_called_once_with(new_state)
 
@@ -61,7 +63,7 @@ def test_internal_client_emit_connection_status_calls_on_connection_state_handle
     mock_transport = MQTTTransport(authentication_provider)
     client = InternalClient(authentication_provider, mock_transport)
     client.on_connection_state = stub_on_connection_state
-    new_state = "apparating"
+    new_state = "noiseless_blackness"
     client.state = new_state
 
     client._emit_connection_status()
@@ -93,3 +95,37 @@ def test_transport_any_error_surfaces_to_internal_client(authentication_provider
         client.send_event(event)
 
     mock_transport.send_event.assert_called_once_with(event)
+
+
+@pytest.mark.parametrize("kind_of_client, auth", [
+    ("Module", authentication_provider),
+    ("Device", authentication_provider),
+])
+def test_client_gets_created_correctly(mocker, kind_of_client, auth):
+    mock_transport = MagicMock(spec=MQTTTransport)
+    mock_constructor_transport = mocker.patch("azure.iot.hub.devicesdk.internal_client.MQTTTransport")
+    mock_constructor_transport.return_value = mock_transport
+
+    if kind_of_client == "Module":
+        module_client = ModuleClient.from_authentication_provider(authentication_provider, "mqtt")
+
+        assert module_client._auth_provider == authentication_provider
+        assert module_client._transport == mock_transport
+
+    else:
+        device_client = DeviceClient.from_authentication_provider(authentication_provider, "mqtt")
+
+        assert device_client._auth_provider == authentication_provider
+        assert device_client._transport == mock_transport
+
+
+@pytest.mark.parametrize("kind_of_client, auth", [
+    ("Module", authentication_provider),
+    ("Device", authentication_provider),
+])
+def test_raises_on_creation_of_client_when_transport_is_incorrect(kind_of_client, auth):
+    with pytest.raises(NotImplementedError, match="No specific transport can be instantiated based on the choice."):
+        if kind_of_client == "Module":
+            ModuleClient.from_authentication_provider(authentication_provider, "floo")
+        else:
+            DeviceClient.from_authentication_provider(authentication_provider, "floo")
