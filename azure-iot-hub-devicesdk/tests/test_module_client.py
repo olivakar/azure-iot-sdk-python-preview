@@ -43,4 +43,6 @@ def test_module_client_gets_created_correctly(mocker, authentication_provider):
     assert device_client._transport == mock_transport
 
 
-
+def test_raises_on_cretaion_of_module_client_when_transport_is_incorrect(authentication_provider):
+    with pytest.raises(NotImplementedError, match="No specific transport can be instantiated based on the choice."):
+        ModuleClient.from_authentication_provider(authentication_provider, "floo")

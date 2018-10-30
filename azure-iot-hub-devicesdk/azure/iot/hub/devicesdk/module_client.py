@@ -18,10 +18,10 @@ class ModuleClient(InternalClient):
         InternalClient.__init__(self, auth_provider, transport)
 
     @staticmethod
-    def from_authentication_provider(authentication_provider, transport_protocol):
-        if transport_protocol == "mqtt":
+    def from_authentication_provider(authentication_provider, transport_name):
+        if transport_name == "mqtt":
             transport = MQTTTransport(authentication_provider)
         else:
-            transport = NotImplemented
+            raise NotImplementedError("No specific transport can be instantiated based on the choice.")
         return ModuleClient(authentication_provider, transport)
 

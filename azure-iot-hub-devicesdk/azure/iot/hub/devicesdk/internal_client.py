@@ -8,7 +8,9 @@ import types
 
 
 class InternalClient(object):
-
+    """
+    A super class representing a generic client. This class needs to be extended for specific clients.
+    """
     def __init__(self, auth_provider, transport):
         """
         Constructor for instantiating an internal client
