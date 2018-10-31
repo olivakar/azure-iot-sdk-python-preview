@@ -85,3 +85,21 @@ def test_disconnect_in_turn_calls_disconnect_on_provider(mocker, transport):
     transport.disconnect()
 
     mock_mqtt_provider.disconnect.assert_called_once_with()
+
+
+def test_connected_state_handler_called_wth_new_state_once_provider_gets_connected(mocker, transport):
+    mock_mqtt_provider = MagicMock(spec=MQTTProvider)
+    mock_mqtt_provider_constructor = mocker.patch(
+        "azure.iot.hub.devicesdk.transport.mqtt.mqtt_transport.MQTTProvider"
+    )
+    mock_mqtt_provider_constructor.return_value = mock_mqtt_provider
+    mocker.patch.object(mock_mqtt_provider, "connect")
+
+    stub_on_transport_connected = mocker.stub(name="on_transport_connected")
+    transport.on_transport_connected = stub_on_transport_connected
+
+    fake_new_state = "noiseless_blackness"
+    transport.connect()
+    mock_mqtt_provider.on_mqtt_connected(fake_new_state)
+
+    stub_on_transport_connected.assert_called_once_with(fake_new_state)

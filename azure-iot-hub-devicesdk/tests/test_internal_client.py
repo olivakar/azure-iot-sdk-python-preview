@@ -44,30 +44,19 @@ def test_internal_client_connect_in_turn_calls_transport_connect(authentication_
     mock_transport.connect.assert_called_once_with()
 
 
-def test_on_transport_getting_connected_connection_state_handler_is_called(mocker, authentication_provider):
-    stub_on_connection_state = mocker.stub(name="on_connection_state")
+def test_connected_state_handler_called_wth_new_state_once_transport_gets_connected(mocker, authentication_provider):
+    transport = MQTTTransport(authentication_provider)
+    mocker.patch.object(transport, "connect")
 
-    mock_transport = MQTTTransport(authentication_provider)
-    client = InternalClient(authentication_provider, mock_transport)
+    client = InternalClient(authentication_provider, transport)
+    stub_on_connection_state = mocker.stub(name="on_connection_state")
     client.on_connection_state = stub_on_connection_state
 
     fake_new_state = "noiseless_blackness"
-    client._handle_transport_connected_state(fake_new_state)
+    client.connect()
+    transport.on_transport_connected(fake_new_state)
 
-    stub_on_connection_state.assert_called_once_with(fake_new_state)
-
-
-def test_internal_client_emit_connection_status_calls_on_connection_state_handler(mocker, authentication_provider):
-    stub_on_connection_state = mocker.stub(name="on_connection_state")
-
-    mock_transport = MQTTTransport(authentication_provider)
-    client = InternalClient(authentication_provider, mock_transport)
-    client.on_connection_state = stub_on_connection_state
-    fake_new_state = "noiseless_blackness"
-    client.state = fake_new_state
-
-    client._emit_connection_status()
-
+    assert client.state == fake_new_state
     stub_on_connection_state.assert_called_once_with(fake_new_state)
 
 
