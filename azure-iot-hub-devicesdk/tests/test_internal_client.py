@@ -44,7 +44,7 @@ def test_internal_client_connect_in_turn_calls_transport_connect(authentication_
     mock_transport.connect.assert_called_once_with()
 
 
-def test_internal_client_get_transport_state_callback_calls_on_connection_state_handler(mocker, authentication_provider):
+def test_on_transport_getting_connected_connection_state_handler_is_called(mocker, authentication_provider):
     stub_on_connection_state = mocker.stub(name="on_connection_state")
 
     mock_transport = MQTTTransport(authentication_provider)
