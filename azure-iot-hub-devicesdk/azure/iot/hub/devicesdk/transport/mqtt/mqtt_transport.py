@@ -31,7 +31,7 @@ class MQTTTransport(AbstractTransport):
 
         self._mqtt_provider = MQTTProvider(client_id, self._auth_provider.hostname, username,
                                            self._auth_provider.get_current_sas_token())
-        self._mqtt_provider.on_mqtt_connected = self._get_connected_state_callback
+        self._mqtt_provider.on_mqtt_connected = self._handle_provider_connected_state
         self._mqtt_provider.connect()
 
     def send_event(self, event):
@@ -41,7 +41,7 @@ class MQTTTransport(AbstractTransport):
     def disconnect(self):
         self._mqtt_provider.disconnect()
 
-    def _get_connected_state_callback(self, machine_state):
+    def _handle_provider_connected_state(self, machine_state):
         return self.on_transport_connected(machine_state)
 
     def _get_telemetry_topic(self):
