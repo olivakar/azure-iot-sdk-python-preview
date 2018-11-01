@@ -49,7 +49,7 @@ class InternalClient(object):
         if self.on_connection_state:
             self.on_connection_state(self.state)
         else:
-            logging.error("No callback defined for sending state")
+            logging.warn("No callback defined for sending state")
 
     def _handle_transport_connected_state(self, new_state):
         self.state = new_state

@@ -24,10 +24,7 @@ class MQTTTransport(AbstractTransport):
         if self._auth_provider.module_id is not None:
             client_id += "/" + self._auth_provider.module_id
 
-        username = self._auth_provider.hostname + "/" + client_id
-
-        if self._auth_provider.module_id is not None:
-            username += "/" + "?api-version=2018-06-30"
+        username = self._auth_provider.hostname + "/" + client_id + "/" + "?api-version=2018-06-30"
 
         self._mqtt_provider = MQTTProvider(client_id, self._auth_provider.hostname, username,
                                            self._auth_provider.get_current_sas_token())
