@@ -3,7 +3,15 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 import pytest
+import threading
 from azure.iot.hub.devicesdk.auth.sk_authentication_provider import SymmetricKeyAuthenticationProvider
+
+from six import add_move, MovedModule
+
+add_move(MovedModule("mock", "mock", "unittest.mock"))
+from six.moves import mock
+from mock import MagicMock
+from mock import patch
 
 connection_string_device_sk_format = "HostName={};DeviceId={};SharedAccessKey={}"
 connection_string_device_skn_format = (
@@ -80,3 +88,33 @@ def test_raises_when_auth_provider_created_from_connection_string_with_bad_keys(
     with pytest.raises(ValueError, match="Invalid Connection String - Invalid Key"):
         connection_string = "BadHostName=beauxbatons.academy-net;BadDeviceId=TheDeluminator;SharedAccessKey=Zm9vYmFy"
         SymmetricKeyAuthenticationProvider.parse(connection_string)
+
+
+@patch('threading.Timer')
+def test_scheduled_sas_token_update_creates_new_token_calls_event_handler_and_schedules_new_update(MockTimer):
+    """
+    Verifies that a scheduled sas token update:
+    1. happens at the appropriate time
+    2. creates new token
+    3. calls event handler
+    4. schedules the next update
+    """
+    pass
+
+def test_manual_sas_token_update_creates_new_token_calls_event_handler_and_schedules_new_update():
+    """
+    Verifies that a manual sas token update:
+    1. creates new token
+    2. calls event handler
+    3. schedules the next update
+    """
+    pass
+
+def test_token_interval_change_creates_new_token_calls_event_handler_and_schedules_new_update():
+    """
+    Verifies that a change to the token update interval:
+    1. creates new token
+    2. calls event handler
+    3. schedules the next update
+    """
+    pass

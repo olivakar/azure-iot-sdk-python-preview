@@ -21,6 +21,7 @@ class AuthenticationProvider(object):
     def get_current_sas_token(self):
         pass
 
+    @staticmethod
     @abc.abstractmethod
     def parse(source):
         """

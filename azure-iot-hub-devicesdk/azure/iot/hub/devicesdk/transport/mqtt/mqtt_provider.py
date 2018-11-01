@@ -10,6 +10,8 @@ import os
 import ssl
 from transitions import Machine
 
+logger = logging.getLogger(__name__)
+
 
 class MQTTProvider(object):
     """
@@ -17,7 +19,7 @@ class MQTTProvider(object):
     to publish/subscribe messages.
     """
 
-    def __init__(self, client_id, hostname, username, password):
+    def __init__(self, client_id, hostname, username, password, ca_cert=None):
         """
         Constructor to instantiate a mqtt provider.
         :param client_id: The id of the client connecting to the broker.
@@ -44,9 +46,34 @@ class MQTTProvider(object):
         self._hostname = hostname
         self._username = username
         self._password = password
+        self._ca_cert = ca_cert
         self._mqtt_client = None
 
         self.on_mqtt_connected = types.FunctionType
+
+        self._mqtt_client = mqtt.Client(self._client_id, False, protocol=mqtt.MQTTv311)
+
+        def _on_connect_callback(client, userdata, flags, result_code):
+            logger.info("connected with result code: %s", str(result_code))
+            self._state_machine.trig_on_connect()
+
+        def on_disconnect_callback(client, userdata, result_code):
+            logger.info("disconnected with result code: %s", str(result_code))
+
+        def on_publish_callback(client, userdata, mid):
+            logger.info("payload published")
+
+        self._mqtt_client.on_connect = _on_connect_callback
+        self._mqtt_client.on_disconnect = on_disconnect_callback
+        self._mqtt_client.on_publish = on_publish_callback
+        logger.info("Created MQTT provider, assigned callbacks")
+
+        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+        if self._ca_cert:
+            ssl_context.load_verify_locations(cadata = self._ca_cert)
+        ssl_context.verify_mode = ssl.CERT_REQUIRED
+        self._mqtt_client.tls_set_context(ssl_context)
+        self._mqtt_client.tls_insecure_set(False)
 
     def _on_enter_connecting(self):
         """
@@ -54,48 +81,34 @@ class MQTTProvider(object):
         In this method the mqtt provider is created and necessary callbacks are assigned.
         The mqtt provider is also connected to a remote broker and is ready to receive messages.
         """
-        self._emit_connection_status()
-        self._mqtt_client = mqtt.Client(self._client_id, False, protocol=mqtt.MQTTv311)
 
-        def _on_connect_callback(client, userdata, flags, result_code):
-            logging.info("connected with result code: %s", str(result_code))
-            self._state_machine.trig_on_connect()
-
-        def on_disconnect_callback(client, userdata, result_code):
-            logging.info("disconnected with result code: %s", str(result_code))
-
-        def on_publish_callback(client, userdata, mid):
-            logging.info("payload published")
-
-        self._mqtt_client.on_connect = _on_connect_callback
-        self._mqtt_client.on_disconnect = on_disconnect_callback
-        self._mqtt_client.on_publish = on_publish_callback
-        logging.info("Created MQTT provider, assigned callbacks")
-
-        self._mqtt_client.tls_set(
-            ca_certs=os.environ.get("IOTHUB_ROOT_CA_CERT"),
-            certfile=None,
-            keyfile=None,
-            cert_reqs=ssl.CERT_REQUIRED,
-            tls_version=ssl.PROTOCOL_TLSv1_2,
-            ciphers=None,
-        )
         self._mqtt_client.username_pw_set(username=self._username, password=self._password)
 
         self._mqtt_client.connect(host=self._hostname, port=8883)
         self._mqtt_client.loop_start()
+        self._emit_connection_status()
 
     def _on_enter_disconnecting(self):
         self._emit_connection_status()
+        logger.info("disconnecting from mqtt broker")
+        self._mqtt_client.loop_stop()
+        self._mqtt_client.disconnect()
 
     def _emit_connection_status(self):
         """
         The connection status is emitted whenever the state machine gets connected or disconnected.
         """
-        logging.info("emit_connection_status")
-        logging.info(self._state_machine.state)
+        logger.info("emit_connection_status: %s", self._state_machine.state)
         if self._state_machine.state == "connected":
             self.on_mqtt_connected(self._state_machine.state)
+
+    def update_password(self, password):
+        """
+        This method is called byrthe upper layers when the password changes
+        """
+        self._password = password
+        self.disconnect()
+        self.connect()
 
     def connect(self):
         """
@@ -103,7 +116,7 @@ class MQTTProvider(object):
         It internally triggers the state machine to transition into "connecting" state.
         This method should be called as an entry point before sending any telemetry.
         """
-        logging.info("creating mqtt client and connecting to mqtt broker")
+        logger.info("creating mqtt client and connecting to mqtt broker")
         self._state_machine.trig_connect()
 
     def disconnect(self):
@@ -111,8 +124,8 @@ class MQTTProvider(object):
         This method disconnects the mqtt provider. This should be called from the upper transport
         when it wants to disconnect from the mqtt provider.
         """
-        logging.info("disconnecting from mqtt broker")
-        self._mqtt_client.loop_stop()
+        logger.info("disconnecting transport")
+        self._state_machine.trig_disconnect()
 
     def publish(self, topic, message_payload):
         """
@@ -120,5 +133,5 @@ class MQTTProvider(object):
         :param topic: topic: The topic that the message should be published on.
         :param message_payload: The actual message to send.
         """
-        logging.info("sending")
+        logger.info("sending")
         self._mqtt_client.publish(topic=topic, payload=message_payload, qos=1)

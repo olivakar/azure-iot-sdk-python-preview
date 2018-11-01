@@ -11,3 +11,5 @@ msrest
 six
 mock
 black; python_version >= '3.6'
+pylint
+

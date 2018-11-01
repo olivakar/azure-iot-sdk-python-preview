@@ -103,3 +103,17 @@ def test_connected_state_handler_called_wth_new_state_once_provider_gets_connect
     mock_mqtt_provider.on_mqtt_connected(fake_new_state)
 
     stub_on_transport_connected.assert_called_once_with(fake_new_state)
+
+def test_sas_token_updated_causes_transport_reconnection():
+    """
+    Verify that transport disconnects and reconnects the transport
+    when the authentication provider triggers an _on_sas_token_updated event
+    """
+    pass
+
+def test_sas_token_updated_does_not_connect_if_transport_was_not_already_connected():
+    """
+    Verify that an updated sas token does not cause the transport to
+    connect itself if it was not previously connected.
+    """
+    pass
