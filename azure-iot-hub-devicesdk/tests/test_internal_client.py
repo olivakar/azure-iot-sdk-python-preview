@@ -100,12 +100,14 @@ def test_client_gets_created_correctly(mocker, kind_of_client, auth):
 
         assert module_client._auth_provider == authentication_provider
         assert module_client._transport == mock_transport
+        assert isinstance(module_client, ModuleClient)
 
     else:
         device_client = DeviceClient.from_authentication_provider(authentication_provider, "mqtt")
 
         assert device_client._auth_provider == authentication_provider
         assert device_client._transport == mock_transport
+        assert isinstance(device_client, DeviceClient)
 
 
 @pytest.mark.parametrize("kind_of_client, auth", [

@@ -62,4 +62,4 @@ class InternalClient(object):
             transport = MQTTTransport(authentication_provider)
         else:
             raise NotImplementedError("No specific transport can be instantiated based on the choice.")
-        return InternalClient(authentication_provider, transport)
+        return cls(authentication_provider, transport)
