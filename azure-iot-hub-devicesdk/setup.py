@@ -5,7 +5,7 @@
 
 from setuptools import setup, find_packages
 
-with open("doc/package-readme.md", "r") as fh:
+with open("azure-iot-hub-devicesdk/doc/package-readme.md", "r") as fh:
     _long_description = fh.read()
 
 setup(
