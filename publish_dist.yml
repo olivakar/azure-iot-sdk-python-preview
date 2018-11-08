@@ -32,14 +32,6 @@ jobs:
   - script: 'python test_packages.py'
     displayName: 'pytest'
 
-  - script: |
-    npm install
-
-  - task: PublishTestResults@2
-    displayName: 'Publish Test Results **/*-test-results.xml'
-    inputs:
-      testResultsFiles: '**/test-results.xml'
-      testRunTitle: 'Python $(python.version)'
 
 - job: 'Publish'
   dependsOn: 'Test'
