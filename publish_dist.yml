@@ -48,10 +48,13 @@ jobs:
     displayName: check source directory
 
   - script: dir
-    displayName: check source directory
+    displayName: check contents of source directory
 
-#  - bash: cd $(Build.SourcesDirectory)\azure-iot-hub-devicesdk
-#    displayName: 'Go to devices'
+  - bash: cd azure-iot-hub-devicesdk
+    displayName: Go to devices
+
+  - script: dir
+    displayName: check content of this directory
 #
 #  - script: python setup.py sdist
 #    displayName: 'Build sdist'
