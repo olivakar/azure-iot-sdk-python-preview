@@ -10,7 +10,7 @@ jobs:
     vmImage: 'Ubuntu 16.04'
   strategy:
     matrix:
-      Python34:
+      Python27:
         python.version: '2.7'
       Python37:
         python.version: '3.7'
@@ -23,24 +23,23 @@ jobs:
       versionSpec: '$(python.version)'
       architecture: 'x64'
 
-  - script: 'python -m pip install --upgrade pip'
+  - script: python -m pip install --upgrade pip
     displayName: 'Update pip'
 
   - script: 'python dev_setup.py'
     displayName: 'Prepare environment (install packages + dependencies + tools)'
 
   - script: 'python test_packages.py'
-    displayName: pytest
+    displayName: 'pytest'
 
   - script: |
     npm install
 
-  - task: PublishTestResults@1
+  - task: PublishTestResults@2
     displayName: 'Publish Test Results **/*-test-results.xml'
     inputs:
-      testResultsFiles: '**/*-test-results.xml'
+      testResultsFiles: '**/test-results.xml'
       testRunTitle: 'Python $(python.version)'
-
 
 - job: 'Publish'
   dependsOn: 'Test'
@@ -48,17 +47,13 @@ jobs:
     vmImage: 'Ubuntu 16.04'
 
   steps:
-  - task: UsePythonVersion@1
-    displayName: 'Use Python $(python.version)'
+  - task: UsePythonVersion@0
     inputs:
-      versionSpec: '$(python.version)'
+      versionSpec: '3.x'
       architecture: 'x64'
 
-  - script: cd azure-iot-hub-devicesdk
-    displayName: 'Go to Devices'
-
-  - script: 'python setup.py sdist bdist_wheel'
-    displayName: 'Build distribution and wheel'
+  - script: python setup.py sdist
+    displayName: 'Build sdist'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish artifact: dist'
@@ -66,6 +61,3 @@ jobs:
       pathtoPublish: 'dist'
       artifactName: 'dist'
       publishLocation: 'Azure Artifacts/TFS'
-
-
-
