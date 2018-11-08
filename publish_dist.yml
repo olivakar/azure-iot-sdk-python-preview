@@ -44,15 +44,18 @@ jobs:
       versionSpec: '3.x'
       architecture: 'x64'
 
-  - script: cd azure-iot-hub-devicesdk
-    displayName: 'Go to devices'
+  - script: echo $(Build.SourcesDirectory)
+    displayName: check source directory
 
-  - script: python setup.py sdist
-    displayName: 'Build sdist'
-
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish artifact: dist'
-    inputs:
-      pathtoPublish: 'dist'
-      artifactName: 'dist'
-      publishLocation: 'Azure Artifacts/TFS'
+#  - script: cd azure-iot-hub-devicesdk
+#    displayName: 'Go to devices'
+#
+#  - script: python setup.py sdist
+#    displayName: 'Build sdist'
+#
+#  - task: PublishBuildArtifacts@1
+#    displayName: 'Publish artifact: dist'
+#    inputs:
+#      pathtoPublish: 'dist'
+#      artifactName: 'dist'
+#      publishLocation: 'Azure Artifacts/TFS'
