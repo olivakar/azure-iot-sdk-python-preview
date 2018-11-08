@@ -50,11 +50,17 @@ jobs:
   - script: dir
     displayName: check contents of source directory
 
-  - bash: cd azure-iot-hub-devicesdk
+#  - script: cd azure-iot-hub-devicesdk
+#    displayName: Go to devices
+#
+#  - script: dir
+#    displayName: check content of this directory
+
+  - script: |
+      cd azure-iot-hub-devicesdk
+      dir
     displayName: Go to devices
 
-  - script: dir
-    displayName: check content of this directory
 #
 #  - script: python setup.py sdist
 #    displayName: 'Build sdist'
