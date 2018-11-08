@@ -53,9 +53,17 @@ jobs:
   - script: |
       cd azure-iot-hub-devicesdk
       dir
-      python setup.py sdist bdist_wheel
+      python setup.py sdist
       dir
-    displayName: Go to devices and build distribution
+    displayName: Go to devices and build source distribution
+
+  - script: |
+      pip install wheel
+      cd azure-iot-hub-devicesdk
+      dir
+      python setup.py bdist_wheel
+      dir
+    displayName: Go to devices and build wheel distribution
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish artifact: folder dist'
