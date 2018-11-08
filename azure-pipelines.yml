@@ -11,7 +11,7 @@ jobs:
   strategy:
     matrix:
       Python34:
-        python.version: '3.4'
+        python.version: '2.7'
       Python37:
         python.version: '3.7'
     maxParallel: 2
@@ -50,10 +50,12 @@ jobs:
       versionSpec: '$(python.version)'
       architecture: 'x64'
 
-    # PyPI Publisher
-    # Create and upload an sdist or wheel to a PyPI-compatible index using Twine.
-  - task: PyPIPublisher@0
+  - script: 'python setup.py sdist bdist_wheel'
+    displayName: 'Build distribution and wheel'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish artifact: dist'
     inputs:
-      pypiConnection: Test PyPI Connection
-      packageDirectory: $(Build.SourcesDirectory)/azure-iot-hub-devicesdk
-      alsoPublishWheel: true # Optional
+      pathtoPublish: 'dist'
+      artifactName: 'dist'
+      publishLocation: 'Azure Artifacts/TFS'
