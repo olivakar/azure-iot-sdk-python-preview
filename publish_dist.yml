@@ -50,7 +50,7 @@ jobs:
   - script: dir
     displayName: check contents of source directory
 
-  - bash: cd $(Build.SourcesDirectory)\azure-iot-hub-devicesdk
+  - bash: cd $(Build.SourcesDirectory)/azure-iot-hub-devicesdk
     displayName: Go to devices
 
   - script: dir
