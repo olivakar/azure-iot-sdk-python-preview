@@ -35,11 +35,10 @@ jobs:
   - script: |
     npm install
 
-  - task: PublishTestResults@2
+  - task: PublishTestResults@1
     displayName: 'Publish Test Results **/*-test-results.xml'
     inputs:
       testResultsFiles: '**/*-test-results.xml'
-
       testRunTitle: 'Python $(python.version)'
 
 
@@ -49,7 +48,7 @@ jobs:
     vmImage: 'Ubuntu 16.04'
 
   steps:
-  - task: UsePythonVersion@0
+  - task: UsePythonVersion@1
     displayName: 'Use Python $(python.version)'
     inputs:
       versionSpec: '$(python.version)'
