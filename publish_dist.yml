@@ -44,6 +44,9 @@ jobs:
       versionSpec: '3.x'
       architecture: 'x64'
 
+  - script: cd azure-iot-hub-devicesdk
+    displayName: 'Go to devices'
+
   - script: python setup.py sdist
     displayName: 'Build sdist'
 
