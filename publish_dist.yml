@@ -50,25 +50,15 @@ jobs:
   - script: dir
     displayName: check contents of source directory
 
-#  - script: cd azure-iot-hub-devicesdk
-#    displayName: Go to devices
-#
-#  - script: dir
-#    displayName: check content of this directory
-
   - script: |
       cd azure-iot-hub-devicesdk
       dir
       python setup.py sdist
     displayName: Go to devices and build distribution
 
-#
-#  - script: python setup.py sdist
-#    displayName: 'Build sdist'
-#
-#  - task: PublishBuildArtifacts@1
-#    displayName: 'Publish artifact: dist'
-#    inputs:
-#      pathtoPublish: 'dist'
-#      artifactName: 'dist'
-#      publishLocation: 'Azure Artifacts/TFS'
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish artifact: folder dist'
+    inputs:
+      pathtoPublish: $(Build.SourcesDirectory)/dist
+      artifactName: 'dist'
+      publishLocation: 'Azure Artifacts/TFS'
