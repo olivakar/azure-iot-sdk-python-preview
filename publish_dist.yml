@@ -59,7 +59,8 @@ jobs:
   - script: |
       cd azure-iot-hub-devicesdk
       dir
-    displayName: Go to devices
+      python setup.py sdist
+    displayName: Go to devices and build distribution
 
 #
 #  - script: python setup.py sdist
