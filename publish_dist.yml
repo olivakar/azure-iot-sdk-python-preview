@@ -54,11 +54,12 @@ jobs:
       cd azure-iot-hub-devicesdk
       dir
       python setup.py sdist
+      dir
     displayName: Go to devices and build distribution
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish artifact: folder dist'
     inputs:
-      pathtoPublish: $(Build.SourcesDirectory)/dist
+      pathtoPublish: $(Build.SourcesDirectory)/azure-iot-hub-devicesdk/dist
       artifactName: 'dist'
       publishLocation: 'Azure Artifacts/TFS'
