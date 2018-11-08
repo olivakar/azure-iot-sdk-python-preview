@@ -62,4 +62,4 @@ jobs:
     inputs:
       pathtoPublish: $(Build.SourcesDirectory)/azure-iot-hub-devicesdk/dist
       artifactName: 'dist'
-      publishLocation: 'Azure Artifacts/TFS'
+      publishLocation: Azure Artifacts/TFS
