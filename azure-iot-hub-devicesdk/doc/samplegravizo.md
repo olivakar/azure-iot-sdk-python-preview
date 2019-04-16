@@ -1,29 +1,28 @@
 <img src='https://g.gravizo.com/svg?
-
-
 @startuml;
 
-actor User; participant "Security Client" as SecClient; 
-participant "Registration Client Factory" as Factory; 
-participant "Registration Client" as RegClient;
+actor User;
+participant "First Class" as A;
+participant "Second Class" as B;
+participant "Last Class" as C;
 
-User -> SecClient: Instantiate Security Client; 
-activate SecClient; 
-SecClient -> User: Instance of Security Client; 
-deactivate SecClient;
+User -> A: DoWork;
+activate A;
 
-User -> Factory: Create Registration Client from SecClient; 
-activate Factory;
+A -> B: Create Request;
+activate B;
 
-Factory -> User: Instance of Registration Client; 
-deactivate Factory;
+B -> C: DoWork;
+activate C;
 
-User -> RegClient: Do register; 
-activate RegClient;
+C --> B: WorkDone;
+destroy C;
 
-RegClient --> User: WorkDone; 
-destroy RegClient;
+B --> A: Request Created;
+deactivate B;
 
-@enduml;
-            
+A --> User: Done;
+deactivate A;
+
+@enduml
 '>
