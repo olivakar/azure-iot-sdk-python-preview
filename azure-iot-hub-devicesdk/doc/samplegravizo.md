@@ -1,7 +1,6 @@
 A sequence diagram. Note that you need to include `;` at the end of each line:
 
-![Alt text](https://g.gravizo.com/source/custom_mark1?
-https://raw.githubusercontent.com/olivakar/azure-iot-sdk-python-preview/ok-release/azure-iot-hub-devicesdk/doc/samplegravizo.md
+![Alt text](https://g.gravizo.com/source/custom_mark1?https://raw.githubusercontent.com/olivakar/azure-iot-sdk-python-preview/ok-release/azure-iot-hub-devicesdk/doc/samplegravizo.md)
 
 <details> 
 <summary></summary>
